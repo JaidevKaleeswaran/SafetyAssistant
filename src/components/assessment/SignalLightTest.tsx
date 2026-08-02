@@ -284,9 +284,9 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
               whileHover={{ scale: 1.04, boxShadow: '0 0 35px rgba(20, 184, 166, 0.5)' }}
               whileTap={{ scale: 0.96 }}
               onClick={handleStartTest}
-              className="w-full min-h-[72px] sm:min-h-[80px] py-5 sm:py-6 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-lg sm:text-xl flex items-center justify-center gap-3 cursor-pointer shadow-2xl transition-all border border-teal-400/40 mt-3"
+              className="w-full py-6 sm:py-7 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-lg sm:text-xl flex items-center justify-center gap-3 cursor-pointer shadow-2xl transition-all border border-teal-400/40"
             >
-              <Play className="w-6 h-6 fill-current" />
+              <Play className="w-7 h-7 fill-current" />
               <span>Begin Signal Light Test</span>
             </motion.button>
           </div>
@@ -378,11 +378,10 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
                   whileTap={canTap ? { scale: 0.92 } : {}}
                   onClick={() => handleCircleTap(color)}
                   disabled={!canTap}
-                  className={`relative w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 shadow-2xl ${
-                    canTap
+                  className={`relative w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 shadow-2xl ${canTap
                       ? 'opacity-100 hover:brightness-110'
                       : 'opacity-90 cursor-not-allowed'
-                  } ${cfg.borderColor}`}
+                    } ${cfg.borderColor}`}
                   style={{
                     backgroundColor: color === 'red' ? '#DC2626' : color === 'yellow' ? '#D97706' : '#059669',
                     boxShadow: isTarget && canTap ? `0 0 35px ${cfg.glowColor}` : '0 10px 25px rgba(0,0,0,0.5)',
@@ -423,11 +422,10 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
               <motion.div
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs font-extrabold ${
-                  lastFeedback.correct
+                className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full border text-xs font-extrabold ${lastFeedback.correct
                     ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
                     : 'bg-rose-500/10 border-rose-500/30 text-rose-400'
-                }`}
+                  }`}
               >
                 {lastFeedback.correct ? (
                   <>

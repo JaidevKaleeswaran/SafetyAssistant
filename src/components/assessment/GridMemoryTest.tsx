@@ -100,18 +100,18 @@ export function GridMemoryTest({ onComplete }: GridMemoryTestProps) {
           <p className="text-center max-w-sm mb-3 leading-relaxed text-base" style={{ color: '#94A3B8' }}>
             <span className="text-emerald-400 font-semibold">{GRID_HIGHLIGHT_COUNT} cells</span> will light up. Memorize their positions, then recreate the pattern.
           </p>
-          <p className="text-center text-sm font-semibold mb-6 text-slate-400">
+          <p className="text-center text-sm font-semibold mb-12" style={{ color: '#64748B' }}>
             {GRID_ROUNDS} rounds • {GRID_DISPLAY_TIME / 1000} seconds to memorize
           </p>
 
           <motion.button
-            whileHover={{ scale: 1.03, boxShadow: '0 0 35px rgba(16,185,129,0.6)' }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.05, boxShadow: '0 0 35px rgba(59,130,246,0.6)' }}
+            whileTap={{ scale: 0.95 }}
             onClick={startRound}
-            className="w-full max-w-sm sm:max-w-md min-h-[72px] sm:min-h-[80px] py-5 sm:py-6 px-8 rounded-3xl text-white font-black text-xl sm:text-2xl cursor-pointer text-center flex items-center justify-center gap-3 shadow-2xl transition-all mt-4 border border-emerald-400/40"
-            style={{ background: 'linear-gradient(135deg, #10B981, #059669)' }}
+            className="w-48 h-48 sm:w-56 sm:h-56 aspect-square rounded-3xl text-white font-black text-xl sm:text-2xl cursor-pointer text-center flex flex-col items-center justify-center gap-3 p-4 shadow-2xl transition-all"
+            style={{ background: 'linear-gradient(135deg, #3B82F6, #2563EB)' }}
           >
-            <Grid3X3 className="w-8 h-8 text-white flex-shrink-0" />
+            <Grid3X3 className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
             <span>Begin Test</span>
           </motion.button>
         </div>

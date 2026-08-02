@@ -65,6 +65,7 @@ export function RideOptions() {
 
       {/* 4 App Cards Grid matching reference UI image */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full">
+        {/* 4 App Cards Grid - Perfectly Centered */}
         {rideOptions.map((option, i) => (
           <motion.button
             key={option.id}
@@ -74,10 +75,10 @@ export function RideOptions() {
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
             onClick={() => handleRideClick(option)}
-            className={`p-4 rounded-3xl border ${option.bgColor} flex flex-col justify-between items-start text-left space-y-4 cursor-pointer shadow-xl transition-all aspect-[4/3] sm:aspect-square w-full`}
+            className={`p-4 rounded-3xl border ${option.bgColor} flex flex-col items-center justify-center text-center space-y-2.5 cursor-pointer shadow-xl transition-all aspect-[4/3] sm:aspect-square w-full`}
           >
-            {/* Top App Icon Badge */}
-            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-md ${option.iconBg}`}>
+            {/* Center App Icon Badge */}
+            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-md flex-shrink-0 ${option.iconBg}`}>
               {option.isUber ? (
                 <span className="font-black text-sm text-white font-sans">Uber</span>
               ) : option.isLyft ? (
@@ -87,8 +88,8 @@ export function RideOptions() {
               ) : null}
             </div>
 
-            {/* Bottom App Title & Subtitle */}
-            <div>
+            {/* Center App Title & Subtitle */}
+            <div className="flex flex-col items-center justify-center text-center">
               <p className="font-extrabold text-sm sm:text-base text-white leading-snug">{option.name}</p>
               <p className="text-[11px] text-slate-400 font-medium">{option.subtitle}</p>
             </div>

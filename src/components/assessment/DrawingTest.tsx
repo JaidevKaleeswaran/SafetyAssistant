@@ -234,13 +234,11 @@ export function DrawingTest({ onComplete }: DrawingTestProps) {
               whileHover={{ scale: 1.03, boxShadow: '0 0 35px rgba(20,184,166,0.5)' }}
               whileTap={{ scale: 0.97 }}
               onClick={startTest}
-              className="w-full min-h-[76px] sm:min-h-[84px] py-5 sm:py-6 px-6 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-lg sm:text-xl cursor-pointer text-center flex items-center justify-center gap-3 shadow-2xl transition-all border border-teal-400/40 mt-3"
+              className="w-full aspect-[4/3] sm:aspect-[16/9] min-h-[160px] p-6 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-xl sm:text-2xl cursor-pointer text-center flex flex-col items-center justify-center gap-3 shadow-2xl transition-all border border-teal-400/40"
             >
-              <Target className="w-8 h-8 text-white flex-shrink-0" />
-              <div className="flex flex-col text-left">
-                <span>Begin Object Tracking Test</span>
-                <span className="text-xs font-semibold text-white/80">Tap to start active target pursuit</span>
-              </div>
+              <Target className="w-10 h-10 text-white" />
+              <span>Begin Object Tracking Test</span>
+              <span className="text-xs font-semibold text-white/80">Tap to start active target pursuit</span>
             </motion.button>
           </div>
         </div>
@@ -322,11 +320,10 @@ export function DrawingTest({ onComplete }: DrawingTestProps) {
           onTouchMove={(e) => {
             if (e.touches[0]) updatePointerFromEvent(e.touches[0].clientX, e.touches[0].clientY);
           }}
-          className={`w-full relative aspect-square rounded-3xl overflow-hidden glass-card border-2 transition-all duration-300 shadow-2xl flex items-start justify-start p-0 cursor-crosshair touch-none ${
-            isInside
+          className={`w-full relative aspect-square rounded-3xl overflow-hidden glass-card border-2 transition-all duration-300 shadow-2xl flex items-start justify-start p-0 cursor-crosshair touch-none ${isInside
               ? 'border-emerald-500 bg-slate-950/90 glow-green'
               : 'border-rose-500 bg-rose-950/20 glow-red'
-          }`}
+            }`}
         >
           {/* Background Grid Pattern */}
           <div className="absolute inset-0 bg-[radial-gradient(#3B82F6_1px,transparent_1px)] [background-size:20px_20px] opacity-15 pointer-events-none" />
@@ -342,11 +339,10 @@ export function DrawingTest({ onComplete }: DrawingTestProps) {
               height: BOX_SIZE_PX,
               willChange: 'transform',
             }}
-            className={`rounded-2xl border-2 flex items-center justify-center transition-colors duration-200 shadow-2xl ${
-              isInside
+            className={`rounded-2xl border-2 flex items-center justify-center transition-colors duration-200 shadow-2xl ${isInside
                 ? 'border-emerald-400 bg-gradient-to-br from-teal-500 to-emerald-600 text-white shadow-[0_0_35px_rgba(20,184,166,0.9)] scale-105'
                 : 'border-rose-500/80 bg-slate-900/90 text-rose-400 shadow-[0_0_25px_rgba(239,68,68,0.6)]'
-            }`}
+              }`}
           >
             {/* Target Reticle Crosshair inside Box */}
             <div className="relative w-full h-full flex items-center justify-center pointer-events-none">
