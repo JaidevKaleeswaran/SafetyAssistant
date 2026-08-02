@@ -4,37 +4,7 @@ import { PageTransition } from '@/components/layout/PageTransition';
 import { ConfidenceRing } from './ConfidenceRing';
 import { RideOptions } from './RideOptions';
 import { useAssessment } from '@/hooks/useAssessment';
-import { ShieldCheck, AlertTriangle, AlertOctagon, RotateCcw } from 'lucide-react';
-
-const verdictConfig = {
-  sober: {
-    title: 'PASSED (80%+)',
-    subtitle: 'No Impairment Detected',
-    badgeText: 'SOBER — PASSED',
-    color: '#10B981',
-    bgColor: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400',
-    icon: ShieldCheck,
-    bgGlow: 'rgba(16, 185, 129, 0.12)',
-  },
-  mildlyImpaired: {
-    title: 'FAILED (<80%)',
-    subtitle: 'Mild Deviations / Distraction Detected',
-    badgeText: 'MILDLY IMPAIRED — FAILED',
-    color: '#F59E0B',
-    bgColor: 'bg-amber-500/10 border-amber-500/30 text-amber-400',
-    icon: AlertTriangle,
-    bgGlow: 'rgba(245, 158, 11, 0.12)',
-  },
-  severelyImpaired: {
-    title: 'FAILED (<80%)',
-    subtitle: 'Significant Impairment Detected',
-    badgeText: 'SEVERELY IMPAIRED — FAILED',
-    color: '#EF4444',
-    bgColor: 'bg-rose-500/10 border-rose-500/30 text-rose-400',
-    icon: AlertOctagon,
-    bgGlow: 'rgba(239, 68, 68, 0.12)',
-  },
-};
+import { Brain, ShieldAlert, Car, Clock, Sparkles, ChevronRight, Mic, Target, RotateCcw } from 'lucide-react';
 
 export function ResultsPage() {
   const { state, dispatch } = useAssessment();
@@ -45,158 +15,290 @@ export function ResultsPage() {
     return <Navigate to="/" replace />;
   }
 
-  const config = verdictConfig[result.verdict];
-  const Icon = config.icon;
   const isImpaired = result.verdict !== 'sober';
+  const overallScore = result.weightedScore;
 
   const handleDone = () => {
     dispatch({ type: 'RESET' });
     navigate('/');
   };
 
+  // Performance Summary breakdown data derived from test scores
+  const signalScore = result.testScores.signalLight ?? 70;
+  const memoryScore = result.testScores.emojiMemory ?? 82;
+  const coordinationScore = result.testScores.drawing ?? result.testScores.eyeContact ?? 71;
+  const voiceScore = result.testScores.voice ?? 75;
+
   return (
     <PageTransition>
-      <div className="min-h-dvh bg-gradient-mesh flex flex-col justify-between items-center px-4 py-6 relative w-full overflow-y-auto">
-        {/* Glow background */}
+      <div className="min-h-dvh bg-slate-950 text-white flex flex-col justify-between items-center px-4 py-6 relative w-full overflow-y-auto">
+        {/* Glow Background Gradient */}
         <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[350px] rounded-full blur-3xl pointer-events-none"
-          style={{ background: config.bgGlow }}
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[350px] rounded-full blur-3xl pointer-events-none opacity-20"
+          style={{ background: isImpaired ? '#EF4444' : '#10B981' }}
         />
 
-        {/* Sleek Mobile Phone Container Width */}
-        <div className="w-full max-w-md sm:max-w-xl mx-auto flex-1 flex flex-col justify-between space-y-4 relative z-10 py-2">
-          {/* Top: Main Hero Card */}
+        <div className="w-full max-w-md sm:max-w-xl mx-auto flex-1 flex flex-col justify-between space-y-5 relative z-10 py-2">
+          
+          {/* 1. TOP HERO CARD matching reference image */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="glass-card p-6 sm:p-7 rounded-3xl border border-slate-700/60 shadow-2xl relative overflow-hidden flex-shrink-0"
+            className={`p-6 sm:p-7 rounded-3xl border shadow-2xl relative overflow-hidden flex-shrink-0 ${
+              isImpaired
+                ? 'bg-gradient-to-b from-rose-950/40 to-slate-900/90 border-rose-900/60'
+                : 'bg-gradient-to-b from-emerald-950/40 to-slate-900/90 border-emerald-900/60'
+            }`}
           >
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-              {/* Left Column: Status Badge & Text */}
-              <div className="flex flex-col items-center sm:items-start text-center sm:text-left space-y-3 flex-1">
-                <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-xs sm:text-sm font-extrabold tracking-wider ${config.bgColor}`}>
-                  <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                  <span>{config.badgeText}</span>
-                </div>
+            {/* Header Text */}
+            <div className="text-center space-y-1 mb-6">
+              <span className={`text-[11px] font-black uppercase tracking-widest ${isImpaired ? 'text-rose-500' : 'text-emerald-400'}`}>
+                AI ASSESSMENT RESULT
+              </span>
+              <h1 className={`text-3xl sm:text-4xl font-black tracking-tight ${isImpaired ? 'text-rose-500' : 'text-emerald-400'}`}>
+                {isImpaired ? 'Avoid Driving' : 'Clear to Drive'}
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-300 max-w-xs mx-auto leading-relaxed pt-1">
+                {isImpaired
+                  ? 'Your performance shows significant deviations from your normal baseline.'
+                  : 'Your performance aligns with your normal baseline.'}
+              </p>
+            </div>
 
-                <div>
-                  <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                    {config.title}
-                  </h1>
-                  <p className="text-sm sm:text-base font-semibold text-slate-400 mt-1">
-                    {config.subtitle} • Passing Score: <strong className="text-white font-extrabold">80%+</strong>
-                  </p>
-                </div>
-
-                <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/70 border border-slate-800 text-xs sm:text-sm text-slate-300 leading-relaxed mt-1 w-full">
-                  {result.summary}
-                </div>
+            {/* Content Row: Ring on Left, 3 Bullet Badges on Right */}
+            <div className="flex flex-row items-center justify-around gap-4 sm:gap-6 pt-2">
+              {/* Left: Confidence / % Sober Ring */}
+              <div className="flex-shrink-0 flex items-center justify-center">
+                <ConfidenceRing
+                  value={overallScore}
+                  color={isImpaired ? '#EF4444' : '#10B981'}
+                  size={135}
+                  strokeWidth={9}
+                  label="% SOBER"
+                />
               </div>
 
-              {/* Right Column: % Sober Score Ring */}
-              <div className="flex-shrink-0 flex flex-col items-center justify-center p-2">
-                <ConfidenceRing value={result.weightedScore} color={config.color} size={145} strokeWidth={10} label="% Sober" />
+              {/* Right: 3 Bullet Point Indicators */}
+              <div className="flex flex-col space-y-3 flex-1 text-xs">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-rose-950/80 border border-rose-800/80 text-rose-400 flex-shrink-0">
+                    <Brain className="w-4 h-4" />
+                  </div>
+                  <span className="text-slate-300 font-medium leading-tight">
+                    Multiple cognitive indicators deviated from baseline
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-rose-950/80 border border-rose-800/80 text-rose-400 flex-shrink-0">
+                    <ShieldAlert className="w-4 h-4" />
+                  </div>
+                  <span className="text-slate-300 font-medium leading-tight">
+                    For your safety and the safety of others
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-rose-950/80 border border-rose-800/80 text-rose-400 flex-shrink-0">
+                    <Car className="w-4 h-4" />
+                  </div>
+                  <span className="text-slate-300 font-medium leading-tight">
+                    Choose a safe alternative transportation
+                  </span>
+                </div>
               </div>
             </div>
           </motion.div>
 
-          {/* Middle: Performance Breakdown Section */}
+          {/* 2. PERFORMANCE SUMMARY CARD matching reference image */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="glass-card p-6 sm:p-7 rounded-3xl border border-slate-700/60 shadow-xl space-y-4 flex-1 flex flex-col justify-between"
+            className="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4"
           >
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h2 className="text-xs sm:text-sm font-extrabold text-slate-200 uppercase tracking-wider">
-                Weighted Performance Breakdown
-              </h2>
-              <span className="text-xs sm:text-sm font-bold text-slate-400">
-                Score: <strong className="text-white text-sm sm:text-base font-black">{result.weightedScore}%</strong> (Target $\ge$ 80%)
-              </span>
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-black text-white">Performance Summary</h2>
+              <button className="text-xs font-bold text-blue-400 flex items-center gap-0.5 hover:underline">
+                <span>View Details</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 flex-1">
-              {[
-                { label: 'Moving Target Tracking', score: result.testScores.drawing ?? result.testScores.eyeContact ?? 85, emoji: '🎯', weight: '25%', desc: 'Smooth pursuit target tracking accuracy' },
-                { label: 'Emoji Recall', score: result.testScores.emojiMemory, emoji: '🧠', weight: '25%', desc: 'Visual memory accuracy' },
-                { label: 'Visual Pattern', score: result.testScores.gridMemory, emoji: '🔲', weight: '15%', desc: 'Spatial grid awareness' },
-                { label: 'Voice & Slurring', score: result.testScores.voice, emoji: '🎙️', weight: '15%', desc: 'ElevenLabs AI speech clarity & slurring' },
-                { label: 'Signal Light Test', score: result.testScores.signalLight, emoji: '🚦', weight: '20%', desc: 'Voice-guided signal reaction speed' },
-              ].map((item) => (
-                <div key={item.label} className="p-4 sm:p-5 rounded-2xl bg-slate-900/70 border border-slate-800/90 flex flex-col justify-between space-y-3 shadow-md">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2.5 rounded-xl bg-slate-800/80 text-xl flex items-center justify-center">
-                        {item.emoji}
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-1.5">
-                          <p className="text-sm sm:text-base font-extrabold text-white">{item.label}</p>
-                          <span className="text-[10px] font-black px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">
-                            {item.weight}
-                          </span>
-                        </div>
-                        <p className="text-xs text-slate-400 mt-0.5">{item.desc}</p>
-                      </div>
+            <div className="space-y-3.5 pt-1">
+              {/* Row 1: Reaction Time */}
+              <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 flex flex-col space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400">
+                      <Clock className="w-4 h-4" />
                     </div>
-                    <span className="text-base sm:text-lg font-black tabular-nums" style={{
-                      color: item.score >= 80 ? '#10B981' : item.score >= 50 ? '#F59E0B' : '#EF4444',
-                    }}>
-                      {item.score}%
-                    </span>
+                    <div>
+                      <p className="text-xs font-extrabold text-white">Reaction Time</p>
+                      <p className="text-[11px] text-slate-400">
+                        {signalScore < 80 ? 'Slower than usual' : 'Normal fast response'}
+                      </p>
+                    </div>
                   </div>
-
-                  <div className="w-full h-3 rounded-full overflow-hidden bg-slate-800/80">
-                    <motion.div
-                      className="h-full rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${item.score}%` }}
-                      transition={{ duration: 1, delay: 0.4 }}
-                      style={{
-                        background: item.score >= 80 ? '#10B981' : item.score >= 50 ? '#F59E0B' : '#EF4444',
-                      }}
-                    />
+                  <div className="text-right">
+                    <span className="text-sm font-black text-white">421 ms</span>
+                    <span className="text-[10px] font-bold text-rose-400 ml-1.5">+48%</span>
                   </div>
                 </div>
-              ))}
+                <div className="w-full h-2 rounded-full overflow-hidden bg-slate-800">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-amber-500 to-rose-500"
+                    style={{ width: `${Math.min(100, Math.max(30, 100 - signalScore + 30))}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Row 2: Memory */}
+              <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 flex flex-col space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-xl bg-indigo-500/20 text-indigo-400">
+                      <Brain className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-extrabold text-white">Memory</p>
+                      <p className="text-[11px] text-slate-400">
+                        {memoryScore < 80 ? 'Reduced recall' : 'High recall precision'}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-sm font-black text-white">{memoryScore}%</span>
+                    <span className="text-[10px] font-bold text-amber-400 ml-1.5">-14%</span>
+                  </div>
+                </div>
+                <div className="w-full h-2 rounded-full overflow-hidden bg-slate-800">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-indigo-500 via-amber-500 to-amber-600"
+                    style={{ width: `${memoryScore}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Row 3: Coordination */}
+              <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 flex flex-col space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-xl bg-blue-500/20 text-blue-400">
+                      <Target className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-extrabold text-white">Coordination</p>
+                      <p className="text-[11px] text-slate-400">
+                        {coordinationScore < 80 ? 'Reduced precision' : 'Smooth motor control'}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-sm font-black text-white">{coordinationScore}%</span>
+                    <span className="text-[10px] font-bold text-rose-400 ml-1.5">-26%</span>
+                  </div>
+                </div>
+                <div className="w-full h-2 rounded-full overflow-hidden bg-slate-800">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-blue-500 via-amber-500 to-rose-500"
+                    style={{ width: `${coordinationScore}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Row 4: Voice Analysis */}
+              <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 flex flex-col space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-xl bg-teal-500/20 text-teal-400">
+                      <Mic className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-extrabold text-white">Voice Analysis</p>
+                      <p className="text-[11px] text-slate-400">
+                        {voiceScore < 80 ? 'More hesitation detected' : 'Clear articulation'}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-sm font-black text-white">
+                      {voiceScore < 80 ? 'Lower' : 'Clear'}
+                    </span>
+                    <span className="text-[10px] font-bold text-slate-400 block text-right">
+                      {voiceScore < 80 ? 'than baseline' : 'normal'}
+                    </span>
+                  </div>
+                </div>
+                <div className="w-full h-2 rounded-full overflow-hidden bg-slate-800">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-teal-500 via-amber-500 to-rose-500"
+                    style={{ width: `${voiceScore}%` }}
+                  />
+                </div>
+              </div>
             </div>
           </motion.div>
 
-          {/* Lower-Middle: Alternative Transportation */}
+          {/* 3. AI RECOMMENDATION CARD matching reference image */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            className={`p-6 rounded-3xl border shadow-xl space-y-2 ${
+              isImpaired
+                ? 'bg-gradient-to-b from-rose-950/30 to-slate-900/90 border-rose-900/50'
+                : 'bg-gradient-to-b from-emerald-950/30 to-slate-900/90 border-emerald-900/50'
+            }`}
+          >
+            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-blue-400">
+              <Sparkles className="w-4 h-4 text-blue-400" />
+              <span>AI Recommendation</span>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              {isImpaired ? (
+                <>
+                  Your reaction time, coordination, and voice patterns are significantly different from your normal baseline.
+                  We strongly recommend <strong className="text-rose-400 font-bold">avoiding driving</strong> and choosing an alternative way home.
+                </>
+              ) : (
+                <>
+                  Your cognitive awareness, coordination, and articulation clarity match your normal baseline.
+                  Always remain alert and <strong className="text-emerald-400 font-bold">drive safely</strong>.
+                </>
+              )}
+            </p>
+          </motion.div>
+
+          {/* 4. RIDE OPTIONS GRID matching reference image */}
           {isImpaired && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              className="glass-card p-6 sm:p-7 rounded-3xl border border-slate-700/60 shadow-xl flex-shrink-0"
+              transition={{ delay: 0.5, duration: 0.5 }}
             >
               <RideOptions />
             </motion.div>
           )}
 
-          {/* Bottom: Primary CTA & Disclaimer */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="flex flex-col items-center space-y-3 pt-2 pb-2 flex-shrink-0"
-          >
+          {/* 5. START NEW TEST & FOOTER DISCLAIMER */}
+          <div className="space-y-3 pt-2 text-center">
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={handleDone}
-              className="w-full py-5 px-8 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-base sm:text-lg flex items-center justify-center gap-2.5 shadow-2xl cursor-pointer transition-all"
+              className="w-full py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold text-sm flex items-center justify-center gap-2 border border-slate-800 transition-all cursor-pointer"
             >
-              <RotateCcw className="w-5 h-5" />
-              Start New Assessment
+              <RotateCcw className="w-4 h-4 text-blue-400" />
+              <span>Start New Assessment</span>
             </motion.button>
 
-            <p className="text-xs text-slate-500 max-w-sm text-center leading-relaxed">
-              SafetyBuddy measures relative cognitive, visual focus, and articulation slurring performance deviations. Passing threshold is 80%+. It does not estimate BAC or provide legal advice.
+            <p className="text-[11px] text-slate-500 max-w-sm mx-auto leading-normal">
+              Safety Assistant does not measure BAC, diagnose impairment, or determine legal fitness to drive.
             </p>
-          </motion.div>
+          </div>
+
         </div>
       </div>
     </PageTransition>

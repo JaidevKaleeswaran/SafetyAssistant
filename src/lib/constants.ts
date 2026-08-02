@@ -55,5 +55,39 @@ export const ELEVENLABS_AGENT_ID = 'agent_6001kz1q7wy0fahsr1zprscy2cqa';
 export const ELEVENLABS_API_KEY = 'sk_927e1f68da56c2645f9d83229b5843aa2a172a19b7b9338e';
 export const ELEVENLABS_VOICE_ID = '21m00Tcm4TlvDq8ikWAM'; // Rachel (clear English voice)
 
+// 5 Tongue Twisters Pool for Voice & Articulation Test
+export const TONGUE_TWISTERS = [
+  {
+    id: 1,
+    title: 'The Silly Sailor',
+    emoji: '⛵',
+    phrase: 'Seven swift sailors sliced salty sausages on shiny silver saucers.',
+  },
+  {
+    id: 2,
+    title: 'The Busy Baker',
+    emoji: '🧁',
+    phrase: 'Big Bobby baked bright blueberry biscuits before Blake bought brown butter.',
+  },
+  {
+    id: 3,
+    title: 'The Precise Parrot',
+    emoji: '🦜',
+    phrase: 'Polly’s plush purple parrot picked a pair of pristine pink plums.',
+  },
+  {
+    id: 4,
+    title: 'The Crispy Crab',
+    emoji: '🦀',
+    phrase: "Crunchy crabs clumsily crawled across Clear Creek's cold cobblestones.",
+  },
+  {
+    id: 5,
+    title: 'The Fierce Fox',
+    emoji: '🦊',
+    phrase: 'Five frantic foxes flipped fifteen fresh pancakes on Friday afternoon.',
+  },
+] as const;
+
 // Gemini AI Vision config
 export const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';

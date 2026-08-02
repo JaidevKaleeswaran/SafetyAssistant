@@ -284,9 +284,9 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
               whileHover={{ scale: 1.04, boxShadow: '0 0 35px rgba(20, 184, 166, 0.5)' }}
               whileTap={{ scale: 0.96 }}
               onClick={handleStartTest}
-              className="w-full py-6 sm:py-7 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-lg sm:text-xl flex items-center justify-center gap-3 cursor-pointer shadow-2xl transition-all border border-teal-400/40"
+              className="w-full min-h-[72px] sm:min-h-[80px] py-5 sm:py-6 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-lg sm:text-xl flex items-center justify-center gap-3 cursor-pointer shadow-2xl transition-all border border-teal-400/40 mt-3"
             >
-              <Play className="w-7 h-7 fill-current" />
+              <Play className="w-6 h-6 fill-current" />
               <span>Begin Signal Light Test</span>
             </motion.button>
           </div>

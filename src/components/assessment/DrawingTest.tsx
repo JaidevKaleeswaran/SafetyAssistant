@@ -65,8 +65,8 @@ export function DrawingTest({ onComplete }: DrawingTestProps) {
       const pos = boxPosRef.current;
       const halfBox = BOX_SIZE_PX / 2;
 
-      // Primary continuous Lissajous trajectory with dynamic velocity boost (0.75x speed)
-      const t = elapsedSec * 1.2;
+      // Primary continuous Lissajous trajectory with slower smooth pursuit (0.65x speed)
+      const t = elapsedSec * 0.65;
       const radiusX = Math.max(80, (width - BOX_SIZE_PX) / 2 - 10);
       const radiusY = Math.max(80, (height - BOX_SIZE_PX) / 2 - 10);
       const centerX = width / 2;
@@ -234,11 +234,13 @@ export function DrawingTest({ onComplete }: DrawingTestProps) {
               whileHover={{ scale: 1.03, boxShadow: '0 0 35px rgba(20,184,166,0.5)' }}
               whileTap={{ scale: 0.97 }}
               onClick={startTest}
-              className="w-full aspect-[4/3] sm:aspect-[16/9] min-h-[160px] p-6 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-xl sm:text-2xl cursor-pointer text-center flex flex-col items-center justify-center gap-3 shadow-2xl transition-all border border-teal-400/40"
+              className="w-full min-h-[76px] sm:min-h-[84px] py-5 sm:py-6 px-6 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-lg sm:text-xl cursor-pointer text-center flex items-center justify-center gap-3 shadow-2xl transition-all border border-teal-400/40 mt-3"
             >
-              <Target className="w-10 h-10 text-white" />
-              <span>Begin Object Tracking Test</span>
-              <span className="text-xs font-semibold text-white/80">Tap to start active target pursuit</span>
+              <Target className="w-8 h-8 text-white flex-shrink-0" />
+              <div className="flex flex-col text-left">
+                <span>Begin Object Tracking Test</span>
+                <span className="text-xs font-semibold text-white/80">Tap to start active target pursuit</span>
+              </div>
             </motion.button>
           </div>
         </div>

@@ -1,38 +1,45 @@
 import { motion } from 'framer-motion';
-import { Car, Phone, ArrowUpRight } from 'lucide-react';
+import { Users, MoreHorizontal } from 'lucide-react';
 
 const rideOptions = [
   {
     id: 'uber',
     name: 'Uber',
-    actionText: 'Open Uber',
-    description: 'Fast, reliable ride request anytime',
-    icon: Car,
-    badgeColor: 'bg-slate-900/90 border-slate-700/80 text-white',
-    buttonColor: 'bg-slate-800 hover:bg-slate-700 text-white border border-slate-700',
+    subtitle: 'Book a ride',
+    bgColor: 'bg-slate-900/90 border-slate-800 hover:border-slate-700',
+    iconBg: 'bg-black text-white font-black text-xs tracking-wider',
+    isUber: true,
     url: 'https://m.uber.com',
     storeUrl: 'https://apps.apple.com/us/app/uber/id368677368',
   },
   {
     id: 'lyft',
     name: 'Lyft',
-    actionText: 'Open Lyft',
-    description: 'Book a ride in seconds nearby',
-    icon: Car,
-    badgeColor: 'bg-pink-950/70 border-pink-700/60 text-pink-300',
-    buttonColor: 'bg-pink-600 hover:bg-pink-500 text-white',
+    subtitle: 'Book a ride',
+    bgColor: 'bg-gradient-to-br from-pink-900/80 to-purple-950/90 border-pink-700/60 hover:border-pink-500/80',
+    iconBg: 'bg-pink-600 text-white font-black text-xs tracking-wider',
+    isLyft: true,
     url: 'https://www.lyft.com',
     storeUrl: 'https://apps.apple.com/us/app/lyft/id529379082',
   },
   {
     id: 'call',
-    name: 'Call a Friend',
-    actionText: 'Call Now',
-    description: 'Connect directly to a trusted driver',
-    icon: Phone,
-    badgeColor: 'bg-emerald-950/70 border-emerald-700/60 text-emerald-300',
-    buttonColor: 'bg-emerald-600 hover:bg-emerald-500 text-white',
+    name: 'Call Friend',
+    subtitle: 'Ask a friend',
+    bgColor: 'bg-gradient-to-br from-blue-900/80 to-blue-950/90 border-blue-700/60 hover:border-blue-500/80',
+    iconBg: 'bg-blue-600 text-white',
+    icon: Users,
     url: 'tel:',
+    storeUrl: null,
+  },
+  {
+    id: 'more',
+    name: 'More Options',
+    subtitle: 'Explore more',
+    bgColor: 'bg-slate-900/90 border-slate-800 hover:border-slate-700',
+    iconBg: 'bg-slate-800 text-slate-300',
+    icon: MoreHorizontal,
+    url: 'https://www.google.com/search?q=taxi+rideshare+near+me',
     storeUrl: null,
   },
 ];
@@ -43,54 +50,49 @@ export function RideOptions() {
       window.location.href = 'tel:';
       return;
     }
-
     const w = window.open(option.url, '_blank');
-    if (!w) {
-      window.location.href = option.storeUrl || option.url;
+    if (!w && option.storeUrl) {
+      window.location.href = option.storeUrl;
     }
   };
 
   return (
-    <div className="w-full space-y-5">
-      <div className="flex items-center gap-2.5">
-        <div className="w-3.5 h-3.5 rounded-full bg-amber-400 animate-ping" />
-        <span className="text-sm sm:text-base font-black text-slate-200 uppercase tracking-wider">
-          Recommended Alternative Transportation
-        </span>
+    <div className="w-full space-y-4">
+      <div>
+        <h3 className="text-base sm:text-lg font-black text-white">Get Home Safely</h3>
+        <p className="text-xs text-slate-400 font-semibold mt-0.5">Choose an option below</p>
       </div>
 
-      {/* Vertical stacked column of larger cards */}
-      <div className="flex flex-col space-y-4 sm:space-y-5 w-full">
+      {/* 4 App Cards Grid matching reference UI image */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full">
         {rideOptions.map((option, i) => (
-          <motion.div
+          <motion.button
             key={option.id}
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 + i * 0.1 }}
-            className={`p-6 sm:p-7 rounded-3xl border ${option.badgeColor} flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6 transition-all hover:border-slate-500/50 shadow-xl`}
+            transition={{ delay: 0.6 + i * 0.1 }}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            onClick={() => handleRideClick(option)}
+            className={`p-4 rounded-3xl border ${option.bgColor} flex flex-col justify-between items-start text-left space-y-4 cursor-pointer shadow-xl transition-all aspect-[4/3] sm:aspect-square w-full`}
           >
-            {/* Left Info */}
-            <div className="flex items-center gap-4 flex-1 min-w-0 w-full">
-              <div className="p-4 rounded-2xl bg-white/10 flex items-center justify-center flex-shrink-0">
-                <option.icon className="w-7 h-7 text-white" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="font-black text-xl sm:text-2xl text-white truncate">{option.name}</p>
-                <p className="text-xs sm:text-base text-slate-300 font-medium truncate mt-1">{option.description}</p>
-              </div>
+            {/* Top App Icon Badge */}
+            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shadow-md ${option.iconBg}`}>
+              {option.isUber ? (
+                <span className="font-black text-sm text-white font-sans">Uber</span>
+              ) : option.isLyft ? (
+                <span className="font-black text-sm text-white italic font-sans">lyft</span>
+              ) : option.icon ? (
+                <option.icon className="w-6 h-6" />
+              ) : null}
             </div>
 
-            {/* Right Action Button — Extra Large on Mobile */}
-            <motion.button
-              whileHover={{ scale: 1.04, boxShadow: '0 0 25px rgba(255,255,255,0.2)' }}
-              whileTap={{ scale: 0.96 }}
-              onClick={() => handleRideClick(option)}
-              className={`w-full sm:w-auto min-h-[68px] sm:min-h-[76px] py-5 sm:py-6 px-8 sm:px-10 rounded-2xl sm:rounded-3xl text-lg sm:text-xl font-black flex items-center justify-center gap-3 cursor-pointer shadow-2xl transition-all flex-shrink-0 border ${option.buttonColor}`}
-            >
-              <span>{option.actionText}</span>
-              <ArrowUpRight className="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0" />
-            </motion.button>
-          </motion.div>
+            {/* Bottom App Title & Subtitle */}
+            <div>
+              <p className="font-extrabold text-sm sm:text-base text-white leading-snug">{option.name}</p>
+              <p className="text-[11px] text-slate-400 font-medium">{option.subtitle}</p>
+            </div>
+          </motion.button>
         ))}
       </div>
     </div>
