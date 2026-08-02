@@ -237,12 +237,12 @@ export function ResultsPage() {
           {/* 5. START NEW TEST & FOOTER DISCLAIMER */}
           <div className="space-y-3 pt-2 text-center">
             <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.04, boxShadow: '0 0 35px rgba(59, 130, 246, 0.4)' }}
+              whileTap={{ scale: 0.96 }}
               onClick={handleDone}
-              className="w-full py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold text-sm flex items-center justify-center gap-2 border border-slate-800 transition-all cursor-pointer"
+              className="w-full py-5 sm:py-6 min-h-[72px] rounded-3xl bg-gradient-to-r from-slate-900 via-blue-950/80 to-slate-900 hover:from-slate-800 hover:to-slate-800 text-white font-black text-lg sm:text-xl flex items-center justify-center gap-3 border border-blue-500/40 hover:border-blue-400 shadow-2xl transition-all cursor-pointer"
             >
-              <RotateCcw className="w-4 h-4 text-blue-400" />
+              <RotateCcw className="w-6 h-6 sm:w-7 sm:h-7 text-blue-400 flex-shrink-0" />
               <span>Start New Assessment</span>
             </motion.button>
 
