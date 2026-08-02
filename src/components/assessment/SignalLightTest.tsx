@@ -266,9 +266,9 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
             className="w-56 h-56 sm:w-64 sm:h-64 rounded-[36px] bg-gradient-to-br from-amber-950/80 via-slate-900 to-rose-950/80 border-2 border-amber-400/80 flex flex-col items-center justify-center gap-3.5 shadow-[0_0_60px_rgba(245,158,11,0.35)] relative overflow-hidden my-4"
           >
             <div className="absolute inset-2 rounded-[28px] border border-amber-400/30 pointer-events-none" />
-            <div className="w-12 h-12 rounded-full bg-rose-500 shadow-[0_0_20px_rgba(239,68,68,0.8)] border-2 border-rose-300 flex items-center justify-center font-black text-white text-xs">STOP</div>
-            <div className="w-12 h-12 rounded-full bg-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.8)] border-2 border-amber-300 flex items-center justify-center font-black text-white text-xs">SLOW</div>
-            <div className="w-12 h-12 rounded-full bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.8)] border-2 border-emerald-300 flex items-center justify-center font-black text-white text-xs">GO</div>
+            <div className="w-12 h-12 rounded-full bg-blue-600 shadow-[0_0_20px_rgba(37,99,235,0.8)] border-2 border-blue-300 flex items-center justify-center font-black text-white text-xs">STOP</div>
+            <div className="w-12 h-12 rounded-full bg-blue-600 shadow-[0_0_20px_rgba(37,99,235,0.8)] border-2 border-blue-300 flex items-center justify-center font-black text-white text-xs">SLOW</div>
+            <div className="w-12 h-12 rounded-full bg-blue-600 shadow-[0_0_20px_rgba(37,99,235,0.8)] border-2 border-blue-300 flex items-center justify-center font-black text-white text-xs">GO</div>
           </motion.div>
 
           {/* Bottom Pill Button */}
@@ -306,8 +306,6 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
     );
   }
 
-  const currentConfig = SIGNAL_CONFIG[targetColor];
-
   return (
     <PageTransition>
       <div className="w-full flex-1 flex flex-col justify-between items-center text-center px-4 py-4 max-w-md sm:max-w-lg mx-auto space-y-4">
@@ -329,26 +327,23 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
           </button>
         </div>
 
-        {/* Display Text Cue (STOP / CAUTION / GO) */}
-        <div className="w-full flex flex-col items-center justify-center py-2 space-y-2">
+        {/* Audio Status & Instruction Header (No answer text revealed) */}
+        <div className="w-full flex flex-col items-center justify-center py-2 space-y-1 text-center">
           <AnimatePresence mode="wait">
             <motion.div
-              key={currentRound + targetColor}
-              initial={{ scale: 0.7, opacity: 0 }}
+              key={currentRound}
+              initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.7, opacity: 0 }}
+              exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              className="flex flex-col items-center"
+              className="flex flex-col items-center min-h-[64px] justify-center"
             >
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-1">
-                {isPlayingAudio ? '🔊 Listening to Voice...' : 'NOW CLICK THE SIGNAL'}
+              <span className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-1">
+                {isPlayingAudio ? '🔊 LISTEN CAREFULLY' : 'TAP THE MATCHING SIGNAL'}
               </span>
-              <h1 className={`text-5xl sm:text-6xl font-black tracking-wider ${currentConfig.textStyle}`}>
-                {currentConfig.displayText}
-              </h1>
-              <p className="text-xs sm:text-sm font-semibold text-slate-300 mt-2">
-                {currentConfig.subtitle}
-              </p>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+                {isPlayingAudio ? 'Voice Command Playing...' : 'Select the Signal You Heard'}
+              </h2>
             </motion.div>
           </AnimatePresence>
         </div>
@@ -357,8 +352,6 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
         <div className="w-full glass-card p-6 rounded-3xl border border-slate-700/60 shadow-2xl flex flex-col items-center justify-center space-y-6">
           <div className="flex items-center justify-center gap-4 sm:gap-6 w-full py-4">
             {COLORS_ORDER.map((color) => {
-              const cfg = SIGNAL_CONFIG[color];
-              const isTarget = color === targetColor;
               const isSelected = lastFeedback?.selected === color;
 
               return (
@@ -368,19 +361,15 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
                   whileTap={canTap ? { scale: 0.92 } : {}}
                   onClick={() => handleCircleTap(color)}
                   disabled={!canTap}
-                  className={`relative w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 shadow-2xl ${canTap
+                  className={`relative w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-blue-400 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 shadow-2xl ${canTap
                       ? 'opacity-100 hover:brightness-110'
                       : 'opacity-90 cursor-not-allowed'
-                    } ${cfg.borderColor}`}
+                    }`}
                   style={{
-                    backgroundColor: color === 'red' ? '#DC2626' : color === 'yellow' ? '#D97706' : '#059669',
-                    boxShadow: isTarget && canTap ? `0 0 35px ${cfg.glowColor}` : '0 10px 25px rgba(0,0,0,0.5)',
+                    backgroundColor: '#2563EB',
+                    boxShadow: '0 10px 25px rgba(37,99,235,0.4)',
                   }}
                 >
-                  {/* Outer Glow Ring for active target */}
-                  {isTarget && canTap && (
-                    <span className="absolute inset-0 rounded-full animate-ping opacity-30 bg-white pointer-events-none" />
-                  )}
 
                   {/* Label inside circle */}
                   <span className="text-white font-extrabold text-sm sm:text-base tracking-wider uppercase drop-shadow-md">

@@ -28,7 +28,7 @@ export const EYE_CONTACT_DURATION = 15; // seconds
 export const EYE_CONTACT_PASS_PERCENTAGE = 80; // % eye contact required to pass
 
 // Signal Light test constants
-export const SIGNAL_LIGHT_ROUNDS = 5;
+export const SIGNAL_LIGHT_ROUNDS = 3;
 
 // Scoring weights: Drawing & Emoji 25% each, Grid & Voice 15% each, Signal Light 20%
 export const SCORE_WEIGHTS = {
