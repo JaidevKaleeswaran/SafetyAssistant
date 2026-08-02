@@ -9,7 +9,7 @@ interface DrawingTestProps {
 }
 
 const TEST_DURATION_SEC = 15;
-const BOX_SIZE_PX = 72; // Size of moving target box
+const BOX_SIZE_PX = 92; // Size of moving target box
 
 export function DrawingTest({ onComplete }: DrawingTestProps) {
   const [phase, setPhase] = useState<'intro' | 'active' | 'completed'>('intro');

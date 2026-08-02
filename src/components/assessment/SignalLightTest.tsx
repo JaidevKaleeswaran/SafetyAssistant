@@ -327,23 +327,29 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
           </button>
         </div>
 
-        {/* Audio Status & Instruction Header (No answer text revealed) */}
-        <div className="w-full flex flex-col items-center justify-center py-2 space-y-1 text-center">
+        {/* Center Signal Light Target Display (Blank Red, Yellow, or Green Circle) */}
+        <div className="w-full flex flex-col items-center justify-center py-3 text-center">
           <AnimatePresence mode="wait">
             <motion.div
-              key={currentRound}
-              initial={{ scale: 0.8, opacity: 0 }}
+              key={currentRound + targetColor}
+              initial={{ scale: 0.7, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
+              exit={{ scale: 0.7, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              className="flex flex-col items-center min-h-[64px] justify-center"
+              className="flex flex-col items-center justify-center space-y-2"
             >
-              <span className="text-xs font-bold text-teal-400 uppercase tracking-widest mb-1">
-                {isPlayingAudio ? '🔊 LISTEN CAREFULLY' : 'TAP THE MATCHING SIGNAL'}
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                TARGET SIGNAL
               </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                {isPlayingAudio ? 'Voice Command Playing...' : 'Select the Signal You Heard'}
-              </h2>
+              <div
+                className={`w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 shadow-2xl transition-all duration-300 ${
+                  targetColor === 'red'
+                    ? 'bg-rose-600 border-rose-400 shadow-[0_0_40px_rgba(239,68,68,0.85)]'
+                    : targetColor === 'yellow'
+                    ? 'bg-amber-500 border-amber-300 shadow-[0_0_40px_rgba(245,158,11,0.85)]'
+                    : 'bg-emerald-500 border-emerald-300 shadow-[0_0_40px_rgba(16,185,129,0.85)]'
+                }`}
+              />
             </motion.div>
           </AnimatePresence>
         </div>
