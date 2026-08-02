@@ -65,8 +65,8 @@ export function DrawingTest({ onComplete }: DrawingTestProps) {
       const pos = boxPosRef.current;
       const halfBox = BOX_SIZE_PX / 2;
 
-      // Primary continuous Lissajous trajectory with dynamic velocity boost
-      const t = elapsedSec * 1.6;
+      // Primary continuous Lissajous trajectory with dynamic velocity boost (0.75x speed)
+      const t = elapsedSec * 1.2;
       const radiusX = Math.max(80, (width - BOX_SIZE_PX) / 2 - 10);
       const radiusY = Math.max(80, (height - BOX_SIZE_PX) / 2 - 10);
       const centerX = width / 2;
