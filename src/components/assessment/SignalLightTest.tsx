@@ -35,8 +35,8 @@ const SIGNAL_CONFIG: Record<
   red: {
     label: 'Red Signal Light',
     voicePhrase: 'Red Light',
-    displayText: 'STOP',
-    subtitle: 'Click the RED signal light circle',
+    displayText: 'RED',
+    subtitle: 'Click the STOP signal light circle',
     activeColor: '#EF4444',
     glowColor: 'rgba(239, 68, 68, 0.6)',
     borderColor: 'border-rose-500',
@@ -46,8 +46,8 @@ const SIGNAL_CONFIG: Record<
   yellow: {
     label: 'Yellow Signal Light',
     voicePhrase: 'Yellow Light',
-    displayText: 'CAUTION',
-    subtitle: 'Click the YELLOW signal light circle',
+    displayText: 'YELLOW',
+    subtitle: 'Click the CAUTION signal light circle',
     activeColor: '#F59E0B',
     glowColor: 'rgba(245, 158, 11, 0.6)',
     borderColor: 'border-amber-500',
@@ -57,8 +57,8 @@ const SIGNAL_CONFIG: Record<
   green: {
     label: 'Green Signal Light',
     voicePhrase: 'Green Light',
-    displayText: 'GO',
-    subtitle: 'Click the GREEN signal light circle',
+    displayText: 'GREEN',
+    subtitle: 'Click the GO signal light circle',
     activeColor: '#10B981',
     glowColor: 'rgba(16, 185, 129, 0.6)',
     borderColor: 'border-emerald-500',
@@ -393,9 +393,9 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
                     <span className="absolute inset-0 rounded-full animate-ping opacity-30 bg-white pointer-events-none" />
                   )}
 
-                  {/* Icon or Label inside circle */}
+                  {/* Label inside circle */}
                   <span className="text-white font-extrabold text-sm sm:text-base tracking-wider uppercase drop-shadow-md">
-                    {color === 'red' ? 'RED' : color === 'yellow' ? 'YELLOW' : 'GREEN'}
+                    {color === 'red' ? 'STOP' : color === 'yellow' ? 'CAUTION' : 'GO'}
                   </span>
 
                   {/* Feedback Overlay inside clicked button */}

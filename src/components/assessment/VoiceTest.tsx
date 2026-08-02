@@ -360,7 +360,7 @@ export function VoiceTest({ onComplete }: VoiceTestProps) {
             className="w-full min-h-[76px] sm:min-h-[88px] py-6 sm:py-7 px-6 rounded-3xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 hover:from-emerald-500 hover:to-teal-400 text-white font-black text-lg sm:text-xl flex items-center justify-center gap-3 cursor-pointer shadow-2xl transition-all border border-emerald-400/30"
           >
             <CheckCircle className="w-8 h-8 text-white flex-shrink-0" />
-            <span>Submit Voice Test & Complete</span>
+            <span>Submit Voice Test</span>
           </motion.button>
         </div>
       </div>
