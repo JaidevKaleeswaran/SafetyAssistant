@@ -226,10 +226,10 @@ export function DrawingTest({ onComplete }: DrawingTestProps) {
 
           {/* Bottom Pill Button */}
           <motion.button
-            whileHover={{ scale: 1.05, boxShadow: '0 0 35px rgba(20,184,166,0.6)' }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.06, boxShadow: '0 0 50px rgba(20,184,166,0.8)' }}
+            whileTap={{ scale: 0.94 }}
             onClick={startTest}
-            className="py-4 px-14 sm:px-16 rounded-full bg-teal-400 hover:bg-teal-300 text-slate-950 font-extrabold text-lg sm:text-xl cursor-pointer shadow-xl transition-all"
+            className="w-full sm:w-auto min-w-[280px] sm:min-w-[340px] py-6 sm:py-7 px-16 sm:px-24 min-h-[80px] sm:min-h-[88px] rounded-full bg-teal-400 hover:bg-teal-300 text-slate-950 font-black text-2xl sm:text-3xl cursor-pointer shadow-2xl transition-all border-2 border-teal-200/50"
           >
             Begin Test
           </motion.button>
