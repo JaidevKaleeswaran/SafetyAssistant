@@ -157,7 +157,7 @@ export function AssessmentFlow() {
         </button>
       </div>
 
-      <div className="flex-1 flex flex-col items-center justify-center w-full max-w-xl sm:max-w-2xl mx-auto px-4">
+      <div className="flex-1 flex flex-col items-center justify-start pt-6 sm:pt-8 w-full max-w-xl sm:max-w-2xl mx-auto px-4">
         <AnimatePresence mode="wait">
           {renderCurrentTest()}
         </AnimatePresence>

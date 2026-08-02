@@ -260,7 +260,7 @@ export function DrawingTest({ onComplete }: DrawingTestProps) {
 
   return (
     <PageTransition>
-      <div className="w-full flex-1 flex flex-col justify-between items-center text-center px-4 py-4 max-w-md sm:max-w-lg mx-auto space-y-4">
+      <div className="w-full flex-1 flex flex-col justify-start items-center text-center px-4 pt-2 sm:pt-4 max-w-md sm:max-w-lg mx-auto space-y-3 sm:space-y-4">
         {/* HUD Top Bar */}
         <div className="w-full glass-card p-4 rounded-2xl border border-slate-700/60 flex items-center justify-between shadow-xl">
           <div className="flex items-center gap-3">
