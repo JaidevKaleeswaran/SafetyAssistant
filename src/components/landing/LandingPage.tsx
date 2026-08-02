@@ -74,7 +74,7 @@ export function LandingPage() {
           className="text-lg sm:text-xl font-light mb-16 sm:mb-20 max-w-md text-center"
           style={{ color: '#94A3B8' }}
         >
-          Your AI companion for safer driving decisions.
+          One minute. One assessment. One safe decision. Many lives saved.
         </motion.p>
 
         {/* Start Assessment Button — Wide Card */}
