@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PageTransition } from '@/components/layout/PageTransition';
-import { Volume2, CheckCircle2, XCircle, Play } from 'lucide-react';
+import { Volume2, CheckCircle2, XCircle } from 'lucide-react';
 import { ELEVENLABS_API_KEY, ELEVENLABS_VOICE_ID, SIGNAL_LIGHT_ROUNDS } from '@/lib/constants';
 import type { SignalLightResult } from '@/types/assessment';
 
@@ -247,45 +247,39 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
   if (phase === 'intro') {
     return (
       <PageTransition>
-        <div className="w-full flex-1 flex flex-col items-center justify-center text-center px-4 py-4 max-w-md mx-auto space-y-5">
-          <div className="space-y-2">
-            <span className="text-xs font-extrabold text-amber-400 uppercase tracking-wider">
-              Phase 5 of 5 · Signal Light
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Signal Light Reaction</h2>
+        <div className="w-full flex-1 flex flex-col items-center justify-between text-center px-6 py-6 sm:py-10 max-w-md sm:max-w-lg mx-auto min-h-[480px] sm:min-h-[520px]">
+          {/* Top: Title & Subtitle */}
+          <div className="space-y-3 pt-2">
+            <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
+              Signal Light Reaction
+            </h1>
+            <p className="text-base sm:text-lg text-slate-200 max-w-xs sm:max-w-sm mx-auto leading-relaxed">
+              Listen for the spoken light color and tap the matching circle
+            </p>
           </div>
 
-          <div className="w-full max-w-sm glass-card p-6 rounded-3xl border border-slate-700/60 shadow-2xl flex flex-col items-center space-y-5">
-            {/* Traffic Lights Preview */}
-            <div className="flex items-center justify-center gap-4 py-3 px-6 rounded-full bg-slate-900/90 border border-slate-800 shadow-inner">
-              <div className="w-10 h-10 rounded-full bg-rose-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] border border-rose-400/50 flex items-center justify-center font-bold text-white text-[10px]">STOP</div>
-              <div className="w-10 h-10 rounded-full bg-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.8)] border border-amber-400/50 flex items-center justify-center font-bold text-white text-[10px]">SLOW</div>
-              <div className="w-10 h-10 rounded-full bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.8)] border border-emerald-400/50 flex items-center justify-center font-bold text-white text-[10px]">GO</div>
-            </div>
+          {/* Center Hero Card */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="w-56 h-56 sm:w-64 sm:h-64 rounded-[36px] bg-gradient-to-br from-amber-950/80 via-slate-900 to-rose-950/80 border-2 border-amber-400/80 flex flex-col items-center justify-center gap-3.5 shadow-[0_0_60px_rgba(245,158,11,0.35)] relative overflow-hidden my-4"
+          >
+            <div className="absolute inset-2 rounded-[28px] border border-amber-400/30 pointer-events-none" />
+            <div className="w-12 h-12 rounded-full bg-rose-500 shadow-[0_0_20px_rgba(239,68,68,0.8)] border-2 border-rose-300 flex items-center justify-center font-black text-white text-xs">STOP</div>
+            <div className="w-12 h-12 rounded-full bg-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.8)] border-2 border-amber-300 flex items-center justify-center font-black text-white text-xs">SLOW</div>
+            <div className="w-12 h-12 rounded-full bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.8)] border-2 border-emerald-300 flex items-center justify-center font-black text-white text-xs">GO</div>
+          </motion.div>
 
-            <div className="w-full space-y-3.5 text-left">
-              {[
-                { icon: '🔊', text: 'A voice will say "Red Light", "Yellow Light", or "Green Light".' },
-                { icon: '👆', text: 'Tap the matching circle as fast as you can.' },
-                { icon: '⚡', text: `${SIGNAL_LIGHT_ROUNDS} rounds. Speed and accuracy both count!` },
-              ].map(({ icon, text }, i) => (
-                <div key={i} className="flex items-center gap-3.5 p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
-                  <span className="text-2xl leading-none flex-shrink-0">{icon}</span>
-                  <p className="text-base sm:text-lg text-white font-bold leading-snug">{text}</p>
-                </div>
-              ))}
-            </div>
-
-            <motion.button
-              whileHover={{ scale: 1.04, boxShadow: '0 0 40px rgba(20, 184, 166, 0.6)' }}
-              whileTap={{ scale: 0.96 }}
-              onClick={handleStartTest}
-              className="w-full min-h-[80px] py-6 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-2xl flex items-center justify-center gap-3 cursor-pointer shadow-2xl transition-all border border-teal-400/40"
-            >
-              <Play className="w-8 h-8 fill-current" />
-              <span>Start Test</span>
-            </motion.button>
-          </div>
+          {/* Bottom Pill Button */}
+          <motion.button
+            whileHover={{ scale: 1.05, boxShadow: '0 0 35px rgba(245,158,11,0.6)' }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleStartTest}
+            className="py-4 px-14 sm:px-16 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-lg sm:text-xl cursor-pointer shadow-xl transition-all"
+          >
+            Begin Test
+          </motion.button>
         </div>
       </PageTransition>
     );

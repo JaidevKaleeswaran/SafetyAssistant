@@ -197,41 +197,42 @@ export function DrawingTest({ onComplete }: DrawingTestProps) {
   if (phase === 'intro') {
     return (
       <PageTransition>
-        <div className="w-full flex-1 flex flex-col items-center justify-center text-center px-4 py-4 max-w-md mx-auto space-y-5">
-          <div className="text-center space-y-2">
-            <span className="text-xs font-extrabold text-teal-400 uppercase tracking-wider">
-              Phase 1 of 5 · Object Tracking
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-              Follow the Moving Box
-            </h2>
+        <div className="w-full flex-1 flex flex-col items-center justify-between text-center px-6 py-6 sm:py-10 max-w-md sm:max-w-lg mx-auto min-h-[480px] sm:min-h-[520px]">
+          {/* Top: Title & Subtitle */}
+          <div className="space-y-3 pt-2">
+            <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
+              Object Tracking
+            </h1>
+            <p className="text-base sm:text-lg text-slate-200 max-w-xs sm:max-w-sm mx-auto leading-relaxed">
+              Keep your cursor or finger inside your glowing target box
+            </p>
           </div>
 
-          <div className="w-full max-w-sm glass-card p-6 rounded-3xl border border-slate-700/60 shadow-2xl flex flex-col items-center space-y-5">
-            {/* Simple steps */}
-            <div className="w-full space-y-3.5 text-left">
-              {[
-                { step: '1', icon: '👀', text: 'A glowing box will move around the screen.' },
-                { step: '2', icon: '☝️', text: 'Keep your finger or cursor inside the box the whole time.' },
-                { step: '3', icon: '⏱️', text: 'The test lasts 15 seconds. Stay locked on!' },
-              ].map(({ step, icon, text }) => (
-                <div key={step} className="flex items-center gap-3.5 p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
-                  <span className="text-2xl leading-none flex-shrink-0">{icon}</span>
-                  <p className="text-base sm:text-lg text-white font-bold leading-snug">{text}</p>
-                </div>
-              ))}
-            </div>
+          {/* Center Hero Card with Concentric Target Rings */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="w-56 h-56 sm:w-64 sm:h-64 rounded-[36px] bg-gradient-to-br from-emerald-950/80 via-slate-900 to-teal-950/80 border-2 border-emerald-400/80 flex items-center justify-center shadow-[0_0_60px_rgba(16,185,129,0.35)] relative overflow-hidden my-4"
+          >
+            <div className="absolute inset-2 rounded-[28px] border border-emerald-400/30 pointer-events-none" />
+            <svg className="w-24 h-24 sm:w-28 sm:h-28 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]" viewBox="0 0 100 100" fill="none">
+              <circle cx="50" cy="50" r="38" stroke="currentColor" strokeWidth="5" />
+              <circle cx="50" cy="50" r="26" stroke="currentColor" strokeWidth="5" />
+              <circle cx="50" cy="50" r="14" stroke="currentColor" strokeWidth="5" />
+              <circle cx="50" cy="50" r="5" fill="currentColor" />
+            </svg>
+          </motion.div>
 
-            <motion.button
-              whileHover={{ scale: 1.03, boxShadow: '0 0 40px rgba(20,184,166,0.6)' }}
-              whileTap={{ scale: 0.97 }}
-              onClick={startTest}
-              className="w-full min-h-[80px] py-6 px-6 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-2xl cursor-pointer flex items-center justify-center gap-3 shadow-2xl transition-all border border-teal-400/40"
-            >
-              <Target className="w-8 h-8 text-white" />
-              <span>Start Test</span>
-            </motion.button>
-          </div>
+          {/* Bottom Pill Button */}
+          <motion.button
+            whileHover={{ scale: 1.05, boxShadow: '0 0 35px rgba(20,184,166,0.6)' }}
+            whileTap={{ scale: 0.95 }}
+            onClick={startTest}
+            className="py-4 px-14 sm:px-16 rounded-full bg-teal-400 hover:bg-teal-300 text-slate-950 font-extrabold text-lg sm:text-xl cursor-pointer shadow-xl transition-all"
+          >
+            Begin Test
+          </motion.button>
         </div>
       </PageTransition>
     );

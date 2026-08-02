@@ -85,40 +85,37 @@ export function GridMemoryTest({ onComplete }: GridMemoryTestProps) {
   if (phase === 'intro') {
     return (
       <PageTransition>
-        <div className="flex-1 flex flex-col items-center justify-center px-4 py-4 space-y-5 w-full max-w-md mx-auto text-center">
-          <div className="space-y-2">
-            <span className="text-xs font-extrabold text-emerald-400 uppercase tracking-wider">
-              Phase 3 of 5 · Pattern Memory
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Visual Pattern Memory</h2>
+        <div className="w-full flex-1 flex flex-col items-center justify-between text-center px-6 py-6 sm:py-10 max-w-md sm:max-w-lg mx-auto min-h-[480px] sm:min-h-[520px]">
+          {/* Top: Title & Subtitle */}
+          <div className="space-y-3 pt-2">
+            <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
+              Pattern Memory
+            </h1>
+            <p className="text-base sm:text-lg text-slate-200 max-w-xs sm:max-w-sm mx-auto leading-relaxed">
+              Memorize which green squares light up, then recreate the pattern
+            </p>
           </div>
 
-          <div className="w-full glass-card p-6 rounded-3xl border border-slate-700/60 shadow-2xl flex flex-col items-center space-y-4">
-            <div className="w-full space-y-3.5 text-left">
-              {[
-                { icon: '💡', text: `${GRID_HIGHLIGHT_COUNT} squares will light up green on a grid.` },
-                { icon: '🧠', text: `Memorize their positions. You have ${GRID_DISPLAY_TIME / 1000} seconds.` },
-                { icon: '👆', text: 'Tap the same squares from memory.' },
-                { icon: '✅', text: 'Hit Submit when you are done. Repeat for 3 rounds.' },
-              ].map(({ icon, text }, i) => (
-                <div key={i} className="flex items-center gap-3.5 p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
-                  <span className="text-2xl leading-none flex-shrink-0">{icon}</span>
-                  <p className="text-base sm:text-lg text-white font-bold leading-snug">{text}</p>
-                </div>
-              ))}
-            </div>
+          {/* Center Hero Card */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="w-56 h-56 sm:w-64 sm:h-64 rounded-[36px] bg-gradient-to-br from-emerald-950/80 via-slate-900 to-teal-950/80 border-2 border-emerald-400/80 flex items-center justify-center shadow-[0_0_60px_rgba(16,185,129,0.35)] relative overflow-hidden my-4"
+          >
+            <div className="absolute inset-2 rounded-[28px] border border-emerald-400/30 pointer-events-none" />
+            <Grid3X3 className="w-24 h-24 sm:w-28 sm:h-28 text-emerald-300 drop-shadow-[0_0_15px_rgba(16,185,129,0.8)]" />
+          </motion.div>
 
-            <motion.button
-              whileHover={{ scale: 1.03, boxShadow: '0 0 40px rgba(16,185,129,0.6)' }}
-              whileTap={{ scale: 0.97 }}
-              onClick={startRound}
-              className="w-full min-h-[80px] py-6 rounded-3xl text-white font-black text-2xl cursor-pointer flex items-center justify-center gap-3 shadow-2xl transition-all"
-              style={{ background: 'linear-gradient(135deg, #10B981, #14B8A6)' }}
-            >
-              <Grid3X3 className="w-8 h-8 text-white" />
-              <span>Start Test</span>
-            </motion.button>
-          </div>
+          {/* Bottom Pill Button */}
+          <motion.button
+            whileHover={{ scale: 1.05, boxShadow: '0 0 35px rgba(16,185,129,0.6)' }}
+            whileTap={{ scale: 0.95 }}
+            onClick={startRound}
+            className="py-4 px-14 sm:px-16 rounded-full bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold text-lg sm:text-xl cursor-pointer shadow-xl transition-all"
+          >
+            Begin Test
+          </motion.button>
         </div>
       </PageTransition>
     );

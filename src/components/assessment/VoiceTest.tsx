@@ -73,6 +73,7 @@ export function VoiceTest({ onComplete }: VoiceTestProps) {
   );
   const selectedTwister = TONGUE_TWISTERS[selectedTwisterIndex];
 
+  const [phase, setPhase] = useState<'intro' | 'active'>('intro');
   const [isListening, setIsListening] = useState(false);
   const [isAnalyzingSTT, setIsAnalyzingSTT] = useState(false);
   const [transcript, setTranscript] = useState('');
@@ -243,6 +244,45 @@ export function VoiceTest({ onComplete }: VoiceTestProps) {
       articulationClarity: finalAnalysis.articulationClarity,
     });
   };
+
+  if (phase === 'intro') {
+    return (
+      <PageTransition>
+        <div className="w-full flex-1 flex flex-col items-center justify-between text-center px-6 py-6 sm:py-10 max-w-md sm:max-w-lg mx-auto min-h-[480px] sm:min-h-[520px]">
+          {/* Top: Title & Subtitle */}
+          <div className="space-y-3 pt-2">
+            <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
+              Voice Articulation
+            </h1>
+            <p className="text-base sm:text-lg text-slate-200 max-w-xs sm:max-w-sm mx-auto leading-relaxed">
+              Read the phrase aloud while recording to test your speech clarity
+            </p>
+          </div>
+
+          {/* Center Hero Card */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="w-56 h-56 sm:w-64 sm:h-64 rounded-[36px] bg-gradient-to-br from-blue-950/80 via-slate-900 to-teal-950/80 border-2 border-blue-400/80 flex items-center justify-center shadow-[0_0_60px_rgba(59,130,246,0.35)] relative overflow-hidden my-4"
+          >
+            <div className="absolute inset-2 rounded-[28px] border border-blue-400/30 pointer-events-none" />
+            <Mic className="w-24 h-24 sm:w-28 sm:h-28 text-blue-300 drop-shadow-[0_0_15px_rgba(59,130,246,0.8)]" />
+          </motion.div>
+
+          {/* Bottom Pill Button */}
+          <motion.button
+            whileHover={{ scale: 1.05, boxShadow: '0 0 35px rgba(59,130,246,0.6)' }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setPhase('active')}
+            className="py-4 px-14 sm:px-16 rounded-full bg-blue-400 hover:bg-blue-300 text-slate-950 font-extrabold text-lg sm:text-xl cursor-pointer shadow-xl transition-all"
+          >
+            Begin Test
+          </motion.button>
+        </div>
+      </PageTransition>
+    );
+  }
 
   return (
     <PageTransition>
