@@ -142,21 +142,38 @@ export function EmojiMemoryTest({ onComplete }: EmojiMemoryTestProps) {
           Round {round + 1} of {EMOJI_ROUNDS}
         </p>
 
-        {/* Display phase — show target emojis with wide spacing */}
+        {/* Display phase — show target emojis with clear order badges */}
         {phase === 'display' && (
-          <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-10 my-8 p-8 glass-card rounded-3xl w-full max-w-md mx-auto">
-            {targetEmojis.map((emoji, i) => (
+          <div className="w-full max-w-md mx-auto space-y-6 my-4">
+            <div className="flex justify-center items-center gap-3 sm:gap-4 p-5 sm:p-6 glass-card rounded-3xl w-full border border-slate-700/80 shadow-2xl">
+              {targetEmojis.map((emoji, i) => (
+                <div key={`target-${i}`} className="flex flex-col items-center gap-1.5 flex-1">
+                  <span className="text-[10px] font-black text-teal-400 uppercase tracking-widest bg-slate-900/80 px-2 py-0.5 rounded-md border border-slate-800">
+                    #{i + 1}
+                  </span>
+                  <div
+                    className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-slate-900 border-2 border-teal-500/60 flex items-center justify-center text-3xl sm:text-5xl shadow-xl leading-none select-none"
+                    style={{
+                      fontFamily: "'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Segoe UI Symbol', sans-serif",
+                      WebkitTextFillColor: 'initial',
+                      color: '#ffffff',
+                      boxShadow: '0 0 25px rgba(20, 184, 166, 0.4)',
+                    }}
+                  >
+                    {emoji}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="w-full bg-slate-800/60 h-2 rounded-full overflow-hidden border border-slate-700/50">
               <motion.div
-                key={`target-${i}`}
-                initial={{ scale: 0, rotate: -20 }}
-                animate={{ scale: 1, rotate: 0 }}
-                transition={{ delay: i * 0.15, type: 'spring' }}
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-slate-800/90 border border-slate-700/80 flex items-center justify-center text-3xl sm:text-4xl shadow-xl"
-                style={{ boxShadow: '0 0 20px rgba(139, 92, 246, 0.3)', fontFamily: "'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif" }}
-              >
-                {emoji}
-              </motion.div>
-            ))}
+                initial={{ width: '100%' }}
+                animate={{ width: '0%' }}
+                transition={{ duration: EMOJI_DISPLAY_TIME / 1000, ease: 'linear' }}
+                className="h-full bg-gradient-to-r from-teal-400 to-emerald-500"
+              />
+            </div>
           </div>
         )}
 
@@ -164,32 +181,36 @@ export function EmojiMemoryTest({ onComplete }: EmojiMemoryTestProps) {
         {phase === 'recall' && (
           <>
             {/* Selected display */}
-            <div className="flex gap-3 mb-6 min-h-[4.5rem]">
+            <div className="flex gap-2.5 sm:gap-3 mb-6 min-h-[4.5rem] justify-center items-center">
               {Array.from({ length: EMOJI_COUNT }).map((_, i) => (
                 <div
                   key={`slot-${i}`}
-                  className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl"
+                  className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex flex-col items-center justify-center text-2xl sm:text-3xl leading-none select-none transition-all shadow-md"
                   style={{
-                    background: selectedEmojis[i] ? 'rgba(59,130,246,0.15)' : 'rgba(255,255,255,0.03)',
-                    border: selectedEmojis[i] ? '2px solid #3B82F6' : '2px dashed rgba(255,255,255,0.1)',
-                    fontFamily: "'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif",
+                    background: selectedEmojis[i] ? 'rgba(59,130,246,0.2)' : 'rgba(15,23,42,0.6)',
+                    border: selectedEmojis[i] ? '2px solid #3B82F6' : '2px dashed rgba(255,255,255,0.15)',
+                    fontFamily: "'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', 'Segoe UI Symbol', sans-serif",
+                    WebkitTextFillColor: 'initial',
+                    color: '#ffffff',
                   }}
                 >
-                  {selectedEmojis[i] || ''}
+                  {selectedEmojis[i] || (
+                    <span className="text-[10px] font-bold text-slate-500">#{i + 1}</span>
+                  )}
                 </div>
               ))}
             </div>
 
             {/* Choice grid */}
-            <div className="grid grid-cols-4 gap-3 sm:gap-4 w-full max-w-sm sm:max-w-md mx-auto">
+            <div className="grid grid-cols-4 gap-2.5 sm:gap-4 w-full max-w-sm sm:max-w-md mx-auto">
               {choiceEmojis.map((emoji, i) => (
                 <motion.button
                   key={`choice-${i}`}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.95 }}
+                  transition={{ delay: i * 0.04 }}
+                  whileHover={{ scale: 1.06 }}
+                  whileTap={{ scale: 0.94 }}
                   onClick={() => handleSelect(emoji)}
                   className={`emoji-card cursor-pointer ${selectedEmojis.includes(emoji) ? 'selected' : ''}`}
                 >
