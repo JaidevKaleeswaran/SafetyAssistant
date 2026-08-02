@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { PageTransition } from '@/components/layout/PageTransition';
-import { Target, CheckCircle2, AlertTriangle, Sparkles } from 'lucide-react';
+import { Target, CheckCircle2, AlertTriangle } from 'lucide-react';
 import type { DrawingTestResult } from '@/types/assessment';
 
 interface DrawingTestProps {
@@ -197,48 +197,39 @@ export function DrawingTest({ onComplete }: DrawingTestProps) {
   if (phase === 'intro') {
     return (
       <PageTransition>
-        <div className="w-full flex-1 flex flex-col items-center justify-center text-center px-4 py-6 max-w-md mx-auto space-y-6">
-          <div className="text-center space-y-2 flex flex-col items-center justify-center pt-2">
+        <div className="w-full flex-1 flex flex-col items-center justify-center text-center px-4 py-4 max-w-md mx-auto space-y-5">
+          <div className="text-center space-y-2">
             <span className="text-xs font-extrabold text-teal-400 uppercase tracking-wider">
-              Phase 1: Smooth Pursuit Tracking
+              Phase 1 of 5 · Object Tracking
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-              Moving Target Pursuit
+              Follow the Moving Box
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-xs mx-auto leading-relaxed pt-1">
-              Keep your cursor or finger inside the glowing target box as it actively moves around the screen for 15 seconds.
-            </p>
           </div>
 
-          <div className="w-full max-w-sm glass-card p-6 rounded-3xl border border-slate-700/60 shadow-2xl flex flex-col items-center justify-center space-y-5">
-            <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-teal-500 to-emerald-600 text-white flex items-center justify-center shadow-xl">
-              <Target className="w-10 h-10" />
-            </div>
-
-            <div className="text-xs text-slate-300 space-y-2.5 text-left w-full px-2">
-              <div className="flex items-center gap-2.5">
-                <CheckCircle2 className="w-4.5 h-4.5 text-emerald-400 flex-shrink-0" />
-                <span>Keep pointer inside the moving box for <strong>15 seconds</strong></span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Sparkles className="w-4.5 h-4.5 text-teal-400 flex-shrink-0" />
-                <span>Accuracy increases when cursor is inside the box</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <AlertTriangle className="w-4.5 h-4.5 text-amber-400 flex-shrink-0" />
-                <span>Straying outside target drops tracking accuracy</span>
-              </div>
+          <div className="w-full max-w-sm glass-card p-6 rounded-3xl border border-slate-700/60 shadow-2xl flex flex-col items-center space-y-5">
+            {/* Simple steps */}
+            <div className="w-full space-y-3.5 text-left">
+              {[
+                { step: '1', icon: '👀', text: 'A glowing box will move around the screen.' },
+                { step: '2', icon: '☝️', text: 'Keep your finger or cursor inside the box the whole time.' },
+                { step: '3', icon: '⏱️', text: 'The test lasts 15 seconds. Stay locked on!' },
+              ].map(({ step, icon, text }) => (
+                <div key={step} className="flex items-center gap-3.5 p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+                  <span className="text-2xl leading-none flex-shrink-0">{icon}</span>
+                  <p className="text-base sm:text-lg text-white font-bold leading-snug">{text}</p>
+                </div>
+              ))}
             </div>
 
             <motion.button
-              whileHover={{ scale: 1.03, boxShadow: '0 0 35px rgba(20,184,166,0.5)' }}
+              whileHover={{ scale: 1.03, boxShadow: '0 0 40px rgba(20,184,166,0.6)' }}
               whileTap={{ scale: 0.97 }}
               onClick={startTest}
-              className="w-full min-h-[100px] py-6 px-6 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-xl sm:text-2xl cursor-pointer text-center flex flex-col items-center justify-center gap-3 shadow-2xl transition-all border border-teal-400/40"
+              className="w-full min-h-[80px] py-6 px-6 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-2xl cursor-pointer flex items-center justify-center gap-3 shadow-2xl transition-all border border-teal-400/40"
             >
-              <Target className="w-10 h-10 text-white" />
-              <span>Begin Object Tracking Test</span>
-              <span className="text-xs font-semibold text-white/80">Tap to start active target pursuit</span>
+              <Target className="w-8 h-8 text-white" />
+              <span>Start Test</span>
             </motion.button>
           </div>
         </div>

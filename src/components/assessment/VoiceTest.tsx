@@ -250,11 +250,11 @@ export function VoiceTest({ onComplete }: VoiceTestProps) {
         {/* Header */}
         <div className="text-center space-y-1.5 flex flex-col items-center justify-center pt-1">
           <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">
-            Phase 4: Repetition & Slurring Analysis
+            Phase 4 of 5 · Speech
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Voice & Articulation Test</h2>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-xs mx-auto leading-relaxed pt-0.5">
-            Read the tongue twister aloud while recording. We evaluate speech clarity and slurring.
+          <p className="text-sm sm:text-base text-slate-200 max-w-sm mx-auto leading-relaxed pt-0.5 font-medium">
+            Read the tongue twister aloud, then tap <strong>Submit</strong> when done.
           </p>
         </div>
 

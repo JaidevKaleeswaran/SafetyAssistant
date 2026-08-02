@@ -98,35 +98,40 @@ export function EmojiMemoryTest({ onComplete }: EmojiMemoryTestProps) {
   if (phase === 'intro') {
     return (
       <PageTransition>
-        <div className="flex-1 flex flex-col items-center justify-center px-6 py-6">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-            className="w-20 h-20 rounded-2xl flex items-center justify-center mb-8"
-            style={{ background: 'linear-gradient(135deg, #8B5CF6, #EC4899)' }}
-          >
-            <Brain className="w-10 h-10 text-white" />
-          </motion.div>
+        <div className="flex-1 flex flex-col items-center justify-center px-4 py-4 space-y-5 w-full max-w-md mx-auto text-center">
+          <div className="space-y-2">
+            <span className="text-xs font-extrabold text-purple-400 uppercase tracking-wider">
+              Phase 2 of 5 · Memory
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Emoji Memory</h2>
+          </div>
 
-          <h2 className="text-3xl font-extrabold mb-4 text-center">Emoji Memory</h2>
-          <p className="text-center max-w-sm mb-3 leading-relaxed text-base" style={{ color: '#94A3B8' }}>
-            Memorize the emojis and their <span className="text-blue-400 font-semibold">exact order</span>, then select them back.
-          </p>
-          <p className="text-center text-sm font-semibold mb-8" style={{ color: '#64748B' }}>
-            {EMOJI_ROUNDS} rounds • {EMOJI_COUNT} emojis each
-          </p>
+          <div className="w-full glass-card p-6 rounded-3xl border border-slate-700/60 shadow-2xl flex flex-col items-center space-y-4">
+            <div className="w-full space-y-3.5 text-left">
+              {[
+                { icon: '👀', text: 'You will see 4 emojis in order. Memorize them!' },
+                { icon: '🧠', text: 'They disappear after a few seconds.' },
+                { icon: '✅', text: 'Then tap the same emojis in the same order.' },
+                { icon: '🔁', text: `${EMOJI_ROUNDS} rounds total. Do your best!` },
+              ].map(({ icon, text }, i) => (
+                <div key={i} className="flex items-center gap-3.5 p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+                  <span className="text-2xl leading-none flex-shrink-0">{icon}</span>
+                  <p className="text-base sm:text-lg text-white font-bold leading-snug">{text}</p>
+                </div>
+              ))}
+            </div>
 
-          <motion.button
-            whileHover={{ scale: 1.05, boxShadow: '0 0 35px rgba(59,130,246,0.6)' }}
-            whileTap={{ scale: 0.95 }}
-            onClick={startRound}
-            className="w-48 h-48 sm:w-56 sm:h-56 aspect-square rounded-3xl text-white font-black text-xl sm:text-2xl cursor-pointer text-center flex flex-col items-center justify-center gap-3 p-4 shadow-2xl transition-all"
-            style={{ background: 'linear-gradient(135deg, #3B82F6, #2563EB)' }}
-          >
-            <Brain className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
-            <span>Begin Test</span>
-          </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.03, boxShadow: '0 0 40px rgba(139,92,246,0.6)' }}
+              whileTap={{ scale: 0.97 }}
+              onClick={startRound}
+              className="w-full min-h-[80px] py-6 rounded-3xl text-white font-black text-2xl cursor-pointer flex items-center justify-center gap-3 shadow-2xl transition-all"
+              style={{ background: 'linear-gradient(135deg, #8B5CF6, #EC4899)' }}
+            >
+              <Brain className="w-8 h-8 text-white" />
+              <span>Start Test</span>
+            </motion.button>
+          </div>
         </div>
       </PageTransition>
     );

@@ -247,47 +247,43 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
   if (phase === 'intro') {
     return (
       <PageTransition>
-        <div className="w-full flex-1 flex flex-col items-center justify-center text-center px-4 py-6 max-w-md mx-auto space-y-6">
-          <div className="text-center space-y-2 flex flex-col items-center justify-center pt-2">
-            <span className="text-xs font-bold text-teal-400 uppercase tracking-wider">
-              Phase 5: Signal Light Test
+        <div className="w-full flex-1 flex flex-col items-center justify-center text-center px-4 py-4 max-w-md mx-auto space-y-5">
+          <div className="space-y-2">
+            <span className="text-xs font-extrabold text-amber-400 uppercase tracking-wider">
+              Phase 5 of 5 · Signal Light
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-              Signal & Audio Reaction Test
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-400 max-w-xs mx-auto leading-relaxed pt-1">
-              Listen to the voice command announcing the signal light color, then tap the matching colored circle as fast as you can.
-            </p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Signal Light Reaction</h2>
           </div>
 
-          {/* Traffic Light Visual Card */}
-          <div className="w-full max-w-sm glass-card p-6 rounded-3xl border border-slate-700/60 shadow-2xl flex flex-col items-center justify-center space-y-5">
+          <div className="w-full max-w-sm glass-card p-6 rounded-3xl border border-slate-700/60 shadow-2xl flex flex-col items-center space-y-5">
+            {/* Traffic Lights Preview */}
             <div className="flex items-center justify-center gap-4 py-3 px-6 rounded-full bg-slate-900/90 border border-slate-800 shadow-inner">
-              <div className="w-9 h-9 rounded-full bg-rose-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] border border-rose-400/50 flex items-center justify-center font-bold text-white text-xs">
-                STOP
-              </div>
-              <div className="w-9 h-9 rounded-full bg-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.8)] border border-amber-400/50 flex items-center justify-center font-bold text-white text-xs">
-                SLOW
-              </div>
-              <div className="w-9 h-9 rounded-full bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.8)] border border-emerald-400/50 flex items-center justify-center font-bold text-white text-xs">
-                GO
-              </div>
+              <div className="w-10 h-10 rounded-full bg-rose-500 shadow-[0_0_15px_rgba(239,68,68,0.8)] border border-rose-400/50 flex items-center justify-center font-bold text-white text-[10px]">STOP</div>
+              <div className="w-10 h-10 rounded-full bg-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.8)] border border-amber-400/50 flex items-center justify-center font-bold text-white text-[10px]">SLOW</div>
+              <div className="w-10 h-10 rounded-full bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.8)] border border-emerald-400/50 flex items-center justify-center font-bold text-white text-[10px]">GO</div>
             </div>
 
-            <div className="text-xs text-slate-400 space-y-1.5 text-center px-2">
-              <p>• {SIGNAL_LIGHT_ROUNDS} Quick Rounds</p>
-              <p>• Voice command speaks signal color</p>
-              <p>• Tests auditory-motor reaction speed</p>
+            <div className="w-full space-y-3.5 text-left">
+              {[
+                { icon: '🔊', text: 'A voice will say "Red Light", "Yellow Light", or "Green Light".' },
+                { icon: '👆', text: 'Tap the matching circle as fast as you can.' },
+                { icon: '⚡', text: `${SIGNAL_LIGHT_ROUNDS} rounds. Speed and accuracy both count!` },
+              ].map(({ icon, text }, i) => (
+                <div key={i} className="flex items-center gap-3.5 p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+                  <span className="text-2xl leading-none flex-shrink-0">{icon}</span>
+                  <p className="text-base sm:text-lg text-white font-bold leading-snug">{text}</p>
+                </div>
+              ))}
             </div>
 
             <motion.button
-              whileHover={{ scale: 1.04, boxShadow: '0 0 35px rgba(20, 184, 166, 0.5)' }}
+              whileHover={{ scale: 1.04, boxShadow: '0 0 40px rgba(20, 184, 166, 0.6)' }}
               whileTap={{ scale: 0.96 }}
               onClick={handleStartTest}
-              className="w-full py-6 sm:py-7 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-lg sm:text-xl flex items-center justify-center gap-3 cursor-pointer shadow-2xl transition-all border border-teal-400/40"
+              className="w-full min-h-[80px] py-6 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-2xl flex items-center justify-center gap-3 cursor-pointer shadow-2xl transition-all border border-teal-400/40"
             >
-              <Play className="w-7 h-7 fill-current" />
-              <span>Begin Signal Light Test</span>
+              <Play className="w-8 h-8 fill-current" />
+              <span>Start Test</span>
             </motion.button>
           </div>
         </div>

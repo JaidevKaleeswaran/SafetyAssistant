@@ -85,35 +85,40 @@ export function GridMemoryTest({ onComplete }: GridMemoryTestProps) {
   if (phase === 'intro') {
     return (
       <PageTransition>
-        <div className="flex-1 flex flex-col items-center justify-center px-6 py-6">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-            className="w-20 h-20 rounded-2xl flex items-center justify-center mb-8"
-            style={{ background: 'linear-gradient(135deg, #10B981, #14B8A6)' }}
-          >
-            <Grid3X3 className="w-10 h-10 text-white" />
-          </motion.div>
+        <div className="flex-1 flex flex-col items-center justify-center px-4 py-4 space-y-5 w-full max-w-md mx-auto text-center">
+          <div className="space-y-2">
+            <span className="text-xs font-extrabold text-emerald-400 uppercase tracking-wider">
+              Phase 3 of 5 · Pattern Memory
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Visual Pattern Memory</h2>
+          </div>
 
-          <h2 className="text-3xl font-extrabold mb-4 text-center">Visual Pattern Memory</h2>
-          <p className="text-center max-w-sm mb-3 leading-relaxed text-base" style={{ color: '#94A3B8' }}>
-            <span className="text-emerald-400 font-semibold">{GRID_HIGHLIGHT_COUNT} cells</span> will light up. Memorize their positions, then recreate the pattern.
-          </p>
-          <p className="text-center text-sm font-semibold mb-8" style={{ color: '#64748B' }}>
-            {GRID_ROUNDS} rounds • {GRID_DISPLAY_TIME / 1000} seconds to memorize
-          </p>
+          <div className="w-full glass-card p-6 rounded-3xl border border-slate-700/60 shadow-2xl flex flex-col items-center space-y-4">
+            <div className="w-full space-y-3.5 text-left">
+              {[
+                { icon: '💡', text: `${GRID_HIGHLIGHT_COUNT} squares will light up green on a grid.` },
+                { icon: '🧠', text: `Memorize their positions. You have ${GRID_DISPLAY_TIME / 1000} seconds.` },
+                { icon: '👆', text: 'Tap the same squares from memory.' },
+                { icon: '✅', text: 'Hit Submit when you are done. Repeat for 3 rounds.' },
+              ].map(({ icon, text }, i) => (
+                <div key={i} className="flex items-center gap-3.5 p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+                  <span className="text-2xl leading-none flex-shrink-0">{icon}</span>
+                  <p className="text-base sm:text-lg text-white font-bold leading-snug">{text}</p>
+                </div>
+              ))}
+            </div>
 
-          <motion.button
-            whileHover={{ scale: 1.05, boxShadow: '0 0 35px rgba(59,130,246,0.6)' }}
-            whileTap={{ scale: 0.95 }}
-            onClick={startRound}
-            className="w-48 h-48 sm:w-56 sm:h-56 aspect-square rounded-3xl text-white font-black text-xl sm:text-2xl cursor-pointer text-center flex flex-col items-center justify-center gap-3 p-4 shadow-2xl transition-all"
-            style={{ background: 'linear-gradient(135deg, #3B82F6, #2563EB)' }}
-          >
-            <Grid3X3 className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
-            <span>Begin Test</span>
-          </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.03, boxShadow: '0 0 40px rgba(16,185,129,0.6)' }}
+              whileTap={{ scale: 0.97 }}
+              onClick={startRound}
+              className="w-full min-h-[80px] py-6 rounded-3xl text-white font-black text-2xl cursor-pointer flex items-center justify-center gap-3 shadow-2xl transition-all"
+              style={{ background: 'linear-gradient(135deg, #10B981, #14B8A6)' }}
+            >
+              <Grid3X3 className="w-8 h-8 text-white" />
+              <span>Start Test</span>
+            </motion.button>
+          </div>
         </div>
       </PageTransition>
     );

@@ -95,37 +95,6 @@ export function LandingPage() {
           </div>
           <div className="absolute inset-0 rounded-3xl glow-blue opacity-60 pointer-events-none" />
         </motion.button>
-
-        {/* Features */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.9, duration: 0.8 }}
-          className="flex gap-4 sm:gap-6 mt-12 flex-wrap justify-center max-w-xl px-2"
-        >
-          {[
-            { icon: '👀', label: '15s Eye Contact' },
-            { icon: '⚖️', label: '30% / 30% / 20% / 20% Weights' },
-            { icon: '🎯', label: '80%+ Passing Score' },
-            { icon: '🎙️', label: 'ElevenLabs & Slurring Tracking' },
-          ].map((item) => (
-            <div key={item.label} className="flex items-center gap-2 text-xs sm:text-sm px-3 py-1.5 rounded-full bg-slate-900/60 border border-slate-800 text-slate-300">
-              <span className="text-base">{item.icon}</span>
-              <span>{item.label}</span>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Disclaimer */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="mt-8 text-xs max-w-sm text-center leading-relaxed"
-          style={{ color: '#475569' }}
-        >
-          SafetyBuddy does not estimate BAC and does not tell you whether it's legal for you to drive. Always use your own judgment.
-        </motion.p>
       </div>
     </PageTransition>
   );
