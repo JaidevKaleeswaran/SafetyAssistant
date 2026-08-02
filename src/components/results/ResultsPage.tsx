@@ -48,14 +48,14 @@ export function ResultsPage() {
             }`}
           >
             {/* Header Text */}
-            <div className="text-center space-y-1 mb-6">
-              <span className={`text-[11px] font-black uppercase tracking-widest ${isImpaired ? 'text-rose-500' : 'text-emerald-400'}`}>
+            <div className="text-center space-y-1 mb-6 flex flex-col items-center justify-center">
+              <span className={`text-[11px] font-black uppercase tracking-widest text-center ${isImpaired ? 'text-rose-500' : 'text-emerald-400'}`}>
                 AI ASSESSMENT RESULT
               </span>
-              <h1 className={`text-3xl sm:text-4xl font-black tracking-tight ${isImpaired ? 'text-rose-500' : 'text-emerald-400'}`}>
+              <h1 className={`text-3xl sm:text-4xl font-black tracking-tight text-center ${isImpaired ? 'text-rose-500' : 'text-emerald-400'}`}>
                 {isImpaired ? 'Avoid Driving' : 'Clear to Drive'}
               </h1>
-              <p className="text-xs sm:text-sm text-slate-300 max-w-xs mx-auto leading-relaxed pt-1">
+              <p className="text-xs sm:text-sm text-slate-300 max-w-sm sm:max-w-md mx-auto text-center leading-relaxed pt-1">
                 {isImpaired
                   ? 'Your performance shows significant deviations from your normal baseline.'
                   : 'Your performance aligns with your normal baseline.'}
