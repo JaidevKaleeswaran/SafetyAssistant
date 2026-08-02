@@ -162,7 +162,7 @@ export function AssessmentFlow() {
           {renderCurrentTest()}
         </AnimatePresence>
       </div>
-      <div className="w-full pb-8 pt-4 flex justify-center items-center">
+      <div className="w-full pb-10 pt-4 flex justify-center items-center safe-area-bottom">
         <ProgressBar currentStep={state.currentStep} />
       </div>
     </div>

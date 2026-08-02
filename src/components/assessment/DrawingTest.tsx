@@ -234,7 +234,7 @@ export function DrawingTest({ onComplete }: DrawingTestProps) {
               whileHover={{ scale: 1.03, boxShadow: '0 0 35px rgba(20,184,166,0.5)' }}
               whileTap={{ scale: 0.97 }}
               onClick={startTest}
-              className="w-full aspect-[4/3] sm:aspect-[16/9] min-h-[160px] p-6 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-xl sm:text-2xl cursor-pointer text-center flex flex-col items-center justify-center gap-3 shadow-2xl transition-all border border-teal-400/40"
+              className="w-full min-h-[100px] py-6 px-6 rounded-3xl bg-gradient-to-r from-teal-500 via-emerald-600 to-teal-500 hover:from-teal-400 hover:to-emerald-500 text-white font-black text-xl sm:text-2xl cursor-pointer text-center flex flex-col items-center justify-center gap-3 shadow-2xl transition-all border border-teal-400/40"
             >
               <Target className="w-10 h-10 text-white" />
               <span>Begin Object Tracking Test</span>

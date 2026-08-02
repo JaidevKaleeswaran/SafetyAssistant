@@ -121,7 +121,7 @@ export function LandingPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.8 }}
-          className="mt-16 text-xs max-w-sm text-center leading-relaxed"
+          className="mt-8 text-xs max-w-sm text-center leading-relaxed"
           style={{ color: '#475569' }}
         >
           SafetyBuddy does not estimate BAC and does not tell you whether it's legal for you to drive. Always use your own judgment.

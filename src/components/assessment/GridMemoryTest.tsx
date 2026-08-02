@@ -85,7 +85,7 @@ export function GridMemoryTest({ onComplete }: GridMemoryTestProps) {
   if (phase === 'intro') {
     return (
       <PageTransition>
-        <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
+        <div className="flex-1 flex flex-col items-center justify-center px-6 py-6">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -100,7 +100,7 @@ export function GridMemoryTest({ onComplete }: GridMemoryTestProps) {
           <p className="text-center max-w-sm mb-3 leading-relaxed text-base" style={{ color: '#94A3B8' }}>
             <span className="text-emerald-400 font-semibold">{GRID_HIGHLIGHT_COUNT} cells</span> will light up. Memorize their positions, then recreate the pattern.
           </p>
-          <p className="text-center text-sm font-semibold mb-12" style={{ color: '#64748B' }}>
+          <p className="text-center text-sm font-semibold mb-8" style={{ color: '#64748B' }}>
             {GRID_ROUNDS} rounds • {GRID_DISPLAY_TIME / 1000} seconds to memorize
           </p>
 

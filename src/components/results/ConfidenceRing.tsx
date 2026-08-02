@@ -14,7 +14,7 @@ export function ConfidenceRing({
   color,
   size = 160,
   strokeWidth = 8,
-  label = '% Sober',
+  label = 'SOBER',
 }: ConfidenceRingProps) {
   const [animatedValue, setAnimatedValue] = useState(0);
   const radius = (size - strokeWidth) / 2;

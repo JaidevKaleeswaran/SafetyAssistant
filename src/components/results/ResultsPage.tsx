@@ -4,7 +4,7 @@ import { PageTransition } from '@/components/layout/PageTransition';
 import { ConfidenceRing } from './ConfidenceRing';
 import { RideOptions } from './RideOptions';
 import { useAssessment } from '@/hooks/useAssessment';
-import { Brain, ShieldAlert, Car, Clock, Sparkles, ChevronRight, Mic, Target, RotateCcw } from 'lucide-react';
+import { Brain, ShieldAlert, Car, Sparkles, Mic, Target, RotateCcw } from 'lucide-react';
 
 export function ResultsPage() {
   const { state, dispatch } = useAssessment();
@@ -23,11 +23,7 @@ export function ResultsPage() {
     navigate('/');
   };
 
-  // Performance Summary breakdown data derived from test scores
-  const signalScore = result.testScores.signalLight ?? 70;
-  const memoryScore = result.testScores.emojiMemory ?? 82;
-  const coordinationScore = result.testScores.drawing ?? result.testScores.eyeContact ?? 71;
-  const voiceScore = result.testScores.voice ?? 75;
+
 
   return (
     <PageTransition>
@@ -75,36 +71,36 @@ export function ResultsPage() {
                   color={isImpaired ? '#EF4444' : '#10B981'}
                   size={135}
                   strokeWidth={9}
-                  label="% SOBER"
+                  label="SOBER"
                 />
               </div>
 
               {/* Right: 3 Bullet Point Indicators */}
               <div className="flex flex-col space-y-3 flex-1 text-xs">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-xl bg-rose-950/80 border border-rose-800/80 text-rose-400 flex-shrink-0">
+                  <div className={`p-2 rounded-xl flex-shrink-0 ${isImpaired ? 'bg-rose-950/80 border border-rose-800/80 text-rose-400' : 'bg-emerald-950/80 border border-emerald-800/80 text-emerald-400'}`}>
                     <Brain className="w-4 h-4" />
                   </div>
                   <span className="text-slate-300 font-medium leading-tight">
-                    Multiple cognitive indicators deviated from baseline
+                    {isImpaired ? 'Multiple cognitive indicators deviated from baseline' : 'Cognitive indicators aligned with normal baseline'}
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-xl bg-rose-950/80 border border-rose-800/80 text-rose-400 flex-shrink-0">
+                  <div className={`p-2 rounded-xl flex-shrink-0 ${isImpaired ? 'bg-rose-950/80 border border-rose-800/80 text-rose-400' : 'bg-emerald-950/80 border border-emerald-800/80 text-emerald-400'}`}>
                     <ShieldAlert className="w-4 h-4" />
                   </div>
                   <span className="text-slate-300 font-medium leading-tight">
-                    For your safety and the safety of others
+                    {isImpaired ? 'For your safety and the safety of others' : 'You are safe to drive — stay alert'}
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-xl bg-rose-950/80 border border-rose-800/80 text-rose-400 flex-shrink-0">
+                  <div className={`p-2 rounded-xl flex-shrink-0 ${isImpaired ? 'bg-rose-950/80 border border-rose-800/80 text-rose-400' : 'bg-emerald-950/80 border border-emerald-800/80 text-emerald-400'}`}>
                     <Car className="w-4 h-4" />
                   </div>
                   <span className="text-slate-300 font-medium leading-tight">
-                    Choose a safe alternative transportation
+                    {isImpaired ? 'Choose a safe alternative transportation' : 'Drive responsibly and obey traffic laws'}
                   </span>
                 </div>
               </div>
@@ -118,126 +114,82 @@ export function ResultsPage() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="p-6 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4"
           >
-            <div className="flex items-center justify-between">
-              <h2 className="text-base font-black text-white">Performance Summary</h2>
-              <button className="text-xs font-bold text-blue-400 flex items-center gap-0.5 hover:underline">
-                <span>View Details</span>
-                <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
+            <h2 className="text-base font-black text-white">Performance Summary</h2>
 
-            <div className="space-y-3.5 pt-1">
-              {/* Row 1: Reaction Time */}
-              <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 flex flex-col space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400">
-                      <Clock className="w-4 h-4" />
+            <div className="space-y-3 pt-1">
+              {[
+                {
+                  label: 'Moving Target Tracking',
+                  score: result.testScores.drawing ?? 0,
+                  icon: <Target className="w-4 h-4" />,
+                  iconBg: 'bg-blue-500/20 text-blue-400',
+                  passText: 'Smooth pursuit control',
+                  failText: 'Reduced tracking precision',
+                },
+                {
+                  label: 'Emoji Memory Recall',
+                  score: result.testScores.emojiMemory ?? 0,
+                  icon: <span className="text-sm">🧠</span>,
+                  iconBg: 'bg-indigo-500/20 text-indigo-400',
+                  passText: 'High recall precision',
+                  failText: 'Reduced recall accuracy',
+                },
+                {
+                  label: 'Visual Pattern Memory',
+                  score: result.testScores.gridMemory ?? 0,
+                  icon: <span className="text-sm">🔲</span>,
+                  iconBg: 'bg-violet-500/20 text-violet-400',
+                  passText: 'Strong spatial awareness',
+                  failText: 'Reduced pattern memory',
+                },
+                {
+                  label: 'Voice & Articulation',
+                  score: result.testScores.voice ?? 0,
+                  icon: <Mic className="w-4 h-4" />,
+                  iconBg: 'bg-teal-500/20 text-teal-400',
+                  passText: 'Clear speech articulation',
+                  failText: 'Hesitation or slurring detected',
+                },
+                {
+                  label: 'Signal Light Reaction',
+                  score: result.testScores.signalLight ?? 0,
+                  icon: <span className="text-sm">🚦</span>,
+                  iconBg: 'bg-emerald-500/20 text-emerald-400',
+                  passText: 'Fast & accurate response',
+                  failText: 'Delayed or incorrect response',
+                },
+              ].map((item) => {
+                const color = item.score >= 80 ? '#10B981' : item.score >= 50 ? '#F59E0B' : '#EF4444';
+                return (
+                  <div key={item.label} className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 flex flex-col space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2 rounded-xl flex items-center justify-center ${item.iconBg}`}>
+                          {item.icon}
+                        </div>
+                        <div>
+                          <p className="text-xs font-extrabold text-white">{item.label}</p>
+                          <p className="text-[11px] text-slate-400">
+                            {item.score >= 80 ? item.passText : item.failText}
+                          </p>
+                        </div>
+                      </div>
+                      <span className="text-sm font-black tabular-nums" style={{ color }}>
+                        {item.score}%
+                      </span>
                     </div>
-                    <div>
-                      <p className="text-xs font-extrabold text-white">Reaction Time</p>
-                      <p className="text-[11px] text-slate-400">
-                        {signalScore < 80 ? 'Slower than usual' : 'Normal fast response'}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-sm font-black text-white">421 ms</span>
-                    <span className="text-[10px] font-bold text-rose-400 ml-1.5">+48%</span>
-                  </div>
-                </div>
-                <div className="w-full h-2 rounded-full overflow-hidden bg-slate-800">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-amber-500 to-rose-500"
-                    style={{ width: `${Math.min(100, Math.max(30, 100 - signalScore + 30))}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Row 2: Memory */}
-              <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 flex flex-col space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-xl bg-indigo-500/20 text-indigo-400">
-                      <Brain className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-extrabold text-white">Memory</p>
-                      <p className="text-[11px] text-slate-400">
-                        {memoryScore < 80 ? 'Reduced recall' : 'High recall precision'}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-sm font-black text-white">{memoryScore}%</span>
-                    <span className="text-[10px] font-bold text-amber-400 ml-1.5">-14%</span>
-                  </div>
-                </div>
-                <div className="w-full h-2 rounded-full overflow-hidden bg-slate-800">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-indigo-500 via-amber-500 to-amber-600"
-                    style={{ width: `${memoryScore}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Row 3: Coordination */}
-              <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 flex flex-col space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-xl bg-blue-500/20 text-blue-400">
-                      <Target className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-extrabold text-white">Coordination</p>
-                      <p className="text-[11px] text-slate-400">
-                        {coordinationScore < 80 ? 'Reduced precision' : 'Smooth motor control'}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-sm font-black text-white">{coordinationScore}%</span>
-                    <span className="text-[10px] font-bold text-rose-400 ml-1.5">-26%</span>
-                  </div>
-                </div>
-                <div className="w-full h-2 rounded-full overflow-hidden bg-slate-800">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-blue-500 via-amber-500 to-rose-500"
-                    style={{ width: `${coordinationScore}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Row 4: Voice Analysis */}
-              <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 flex flex-col space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-xl bg-teal-500/20 text-teal-400">
-                      <Mic className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-extrabold text-white">Voice Analysis</p>
-                      <p className="text-[11px] text-slate-400">
-                        {voiceScore < 80 ? 'More hesitation detected' : 'Clear articulation'}
-                      </p>
+                    <div className="w-full h-2 rounded-full overflow-hidden bg-slate-800">
+                      <motion.div
+                        className="h-full rounded-full"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${item.score}%` }}
+                        transition={{ duration: 1, delay: 0.4 }}
+                        style={{ background: color }}
+                      />
                     </div>
                   </div>
-                  <div className="text-right">
-                    <span className="text-sm font-black text-white">
-                      {voiceScore < 80 ? 'Lower' : 'Clear'}
-                    </span>
-                    <span className="text-[10px] font-bold text-slate-400 block text-right">
-                      {voiceScore < 80 ? 'than baseline' : 'normal'}
-                    </span>
-                  </div>
-                </div>
-                <div className="w-full h-2 rounded-full overflow-hidden bg-slate-800">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-teal-500 via-amber-500 to-rose-500"
-                    style={{ width: `${voiceScore}%` }}
-                  />
-                </div>
-              </div>
+                );
+              })}
             </div>
           </motion.div>
 
