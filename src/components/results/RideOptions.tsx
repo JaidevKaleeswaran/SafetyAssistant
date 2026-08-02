@@ -80,15 +80,15 @@ export function RideOptions() {
               </div>
             </div>
 
-            {/* Right Action Button — Bigger */}
+            {/* Right Action Button — Extra Large on Mobile */}
             <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.04, boxShadow: '0 0 25px rgba(255,255,255,0.2)' }}
+              whileTap={{ scale: 0.96 }}
               onClick={() => handleRideClick(option)}
-              className={`w-full sm:w-auto py-4 px-6 sm:px-8 rounded-2xl text-sm sm:text-lg font-black flex items-center justify-center gap-2.5 cursor-pointer shadow-xl transition-all flex-shrink-0 ${option.buttonColor}`}
+              className={`w-full sm:w-auto min-h-[68px] sm:min-h-[76px] py-5 sm:py-6 px-8 sm:px-10 rounded-2xl sm:rounded-3xl text-lg sm:text-xl font-black flex items-center justify-center gap-3 cursor-pointer shadow-2xl transition-all flex-shrink-0 border ${option.buttonColor}`}
             >
               <span>{option.actionText}</span>
-              <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6" />
+              <ArrowUpRight className="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0" />
             </motion.button>
           </motion.div>
         ))}
