@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { PageTransition } from '@/components/layout/PageTransition';
-import { Mic, CheckCircle, AlertTriangle, Sparkles, Shuffle, RefreshCw } from 'lucide-react';
+import { Mic, CheckCircle2, RefreshCw, Shuffle } from 'lucide-react';
 import { ELEVENLABS_API_KEY, TONGUE_TWISTERS } from '@/lib/constants';
 import type { VoiceTestResult } from '@/types/assessment';
 
@@ -286,139 +286,77 @@ export function VoiceTest({ onComplete }: VoiceTestProps) {
 
   return (
     <PageTransition>
-      <div className="w-full flex-1 flex flex-col justify-center items-center text-center px-4 py-4 max-w-md sm:max-w-lg mx-auto space-y-4">
-        {/* Header */}
-        <div className="text-center space-y-1.5 flex flex-col items-center justify-center pt-1">
-          <span className="text-xs font-bold text-blue-400 uppercase tracking-wider">
-            Phase 4 of 5 · Speech
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Voice & Articulation Test</h2>
-          <p className="text-sm sm:text-base text-slate-200 max-w-sm mx-auto leading-relaxed pt-0.5 font-medium">
-            Read the tongue twister aloud, then tap <strong>Submit</strong> when done.
-          </p>
-        </div>
+      <div className="w-full flex-1 flex flex-col items-center justify-center px-4 py-4 max-w-lg sm:max-w-xl mx-auto">
+        {/* Outer Card matching screenshot scale */}
+        <div className="w-full glass-card p-8 sm:p-10 rounded-[40px] border border-slate-700/80 shadow-2xl flex flex-col items-center justify-between text-center min-h-[540px] sm:min-h-[580px] space-y-6 relative overflow-hidden">
+          
+          {/* Header */}
+          <div className="space-y-2.5 text-center pt-2">
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">Voice Test</h2>
+            <p className="text-base sm:text-lg text-slate-300 leading-normal max-w-md mx-auto">
+              Read the phrase aloud and record your voice
+            </p>
+          </div>
 
-        {/* ElevenLabs API Active Badge */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-[11px] font-extrabold text-blue-400">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>ElevenLabs STT Speech AI Engine Active</span>
-        </div>
-
-        {/* Selected Tongue Twister Card */}
-        <div className="w-full glass-card p-5 sm:p-6 rounded-3xl border border-slate-700/80 shadow-2xl space-y-3 relative overflow-hidden">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-black text-teal-400 uppercase tracking-wider flex items-center gap-1.5">
-              <span>{selectedTwister.emoji}</span>
-              <span>{selectedTwister.title}</span>
-            </span>
-
+          {/* Large Phrase Card with White Border */}
+          <div className="w-full min-h-[200px] sm:min-h-[240px] p-8 sm:p-10 rounded-3xl border-2 border-white/80 bg-slate-950/80 shadow-2xl flex flex-col items-center justify-center text-center relative my-2">
             <button
               onClick={handlePickNewTwister}
               disabled={isListening}
-              className="px-2.5 py-1 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-[11px] font-bold flex items-center gap-1 cursor-pointer transition-all disabled:opacity-50"
-              title="Get a different tongue twister"
+              className="absolute top-4 right-4 p-2.5 rounded-full bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs flex items-center gap-1 cursor-pointer transition-all disabled:opacity-50"
+              title="Change phrase"
             >
-              <Shuffle className="w-3 h-3 text-teal-400" />
-              <span>New Phrase</span>
+              <Shuffle className="w-4 h-4 text-blue-400" />
             </button>
-          </div>
-
-          <div className="p-4 sm:p-5 rounded-2xl bg-slate-950/80 border border-slate-800/90 shadow-inner">
-            <p className="text-base sm:text-lg font-black text-white leading-snug tracking-tight">
+            <p className="text-xl sm:text-2xl font-bold text-white leading-relaxed max-w-md mx-auto">
               "{selectedTwister.phrase}"
             </p>
           </div>
-        </div>
 
-        {/* Action Controls Card */}
-        <div className="w-full glass-card p-5 rounded-3xl border border-slate-700/60 shadow-2xl flex flex-col items-center justify-center space-y-4">
-          {/* Record Button */}
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.96 }}
-            onClick={isListening ? stopRecording : startRecording}
-            className={`w-full min-h-[90px] py-5 px-6 rounded-2xl text-white font-bold text-base sm:text-lg flex items-center justify-center gap-4 transition-all cursor-pointer shadow-xl text-center ${
-              isListening
-                ? 'bg-rose-600 hover:bg-rose-700 animate-pulse'
-                : 'bg-gradient-to-r from-blue-600 via-teal-600 to-blue-500 hover:from-blue-500 hover:to-teal-400'
-            }`}
-          >
-            <Mic className={`w-9 h-9 ${isListening ? 'animate-bounce text-white' : 'text-white'}`} />
-            <div className="flex flex-col text-left">
-              <span className="font-black text-xl">{isListening ? 'Stop Recording' : 'Tap to Record Speech'}</span>
-              <span className="text-xs sm:text-sm text-white/80 font-normal">
-                {isListening ? 'Listening & analyzing slurring...' : 'Speak the phrase out loud'}
-              </span>
-            </div>
-          </motion.button>
-
-          {/* ElevenLabs STT Processing Spinner */}
+          {/* ElevenLabs Processing Indicator */}
           {isAnalyzingSTT && (
-            <div className="flex items-center gap-2 text-xs font-bold text-blue-400 animate-pulse py-1">
-              <RefreshCw className="w-4 h-4 animate-spin text-blue-400" />
+            <div className="flex items-center gap-2 text-sm font-bold text-blue-400 animate-pulse py-1">
+              <RefreshCw className="w-4.5 h-4.5 animate-spin text-blue-400" />
               <span>Analyzing Speech via ElevenLabs STT AI...</span>
             </div>
           )}
 
-          {/* Transcribed Output & Slurring Badge */}
+          {/* Transcribed text if recorded */}
           {transcript && (
-            <div className="w-full p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-center space-y-2.5 shadow-inner">
-              <div className="flex justify-between items-center px-1">
-                <span className="text-xs font-semibold text-slate-400">Speech Transcribed:</span>
-                {analysis && (
-                  <span
-                    className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
-                      analysis.accuracy >= 80
-                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                        : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
-                    }`}
-                  >
-                    {analysis.accuracy}% Word Match
-                  </span>
-                )}
-              </div>
-
-              <p className="text-sm sm:text-base font-bold text-white italic">
-                "{transcript}"
-              </p>
-
-              {/* Slurring Status Indicator */}
-              {analysis && (
-                <div
-                  className={`mt-2 p-2.5 rounded-xl border text-xs font-bold flex items-center justify-between ${
-                    analysis.slurringDetected
-                      ? 'bg-rose-500/10 border-rose-500/30 text-rose-400'
-                      : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    {analysis.slurringDetected ? (
-                      <AlertTriangle className="w-4 h-4 text-rose-400 flex-shrink-0" />
-                    ) : (
-                      <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    )}
-                    <span>
-                      {analysis.slurringDetected
-                        ? '⚠️ Speech Slurring / Word Omission Detected'
-                        : 'Speech Articulation: Crisp & Clear'}
-                    </span>
-                  </div>
-                  <span>Clarity: {analysis.slurScore}%</span>
-                </div>
-              )}
+            <div className="w-full p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-center space-y-1.5 shadow-inner">
+              <span className="text-xs font-semibold text-slate-400">Transcribed Speech:</span>
+              <p className="text-base font-bold text-white italic">"{transcript}"</p>
             </div>
           )}
 
-          {/* Submit Button */}
-          <motion.button
-            whileHover={{ scale: 1.04, boxShadow: '0 0 35px rgba(16,185,129,0.5)' }}
-            whileTap={{ scale: 0.96 }}
-            onClick={handleFinishTest}
-            className="w-full min-h-[76px] sm:min-h-[84px] py-5 sm:py-6 px-6 rounded-3xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 hover:from-emerald-500 hover:to-teal-400 text-white font-black text-lg sm:text-xl flex items-center justify-center gap-3 cursor-pointer shadow-2xl transition-all border border-emerald-400/30"
-          >
-            <CheckCircle className="w-8 h-8 text-white flex-shrink-0" />
-            <span>Submit Voice Test</span>
-          </motion.button>
+          {/* Action Buttons Row - Large Squared Cards */}
+          <div className="flex items-center justify-center gap-4 sm:gap-6 w-full pt-2">
+            {/* Start / Stop Recording Button */}
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(59,130,246,0.6)' }}
+              whileTap={{ scale: 0.95 }}
+              onClick={isListening ? stopRecording : startRecording}
+              className={`flex-1 py-6 sm:py-7 px-4 rounded-3xl text-white font-black text-base sm:text-lg flex flex-col items-center justify-center gap-3 cursor-pointer min-h-[105px] sm:min-h-[115px] shadow-2xl transition-all border ${
+                isListening
+                  ? 'bg-rose-600 hover:bg-rose-700 animate-pulse border-rose-400/50'
+                  : 'bg-blue-600 hover:bg-blue-500 border-blue-400/30'
+              }`}
+            >
+              <Mic className="w-8 h-8 text-white flex-shrink-0" />
+              <span>{isListening ? 'Stop Recording' : 'Start Recording'}</span>
+            </motion.button>
+
+            {/* Submit Test Button */}
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(16,185,129,0.6)' }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleFinishTest}
+              className="flex-1 py-6 sm:py-7 px-4 rounded-3xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-base sm:text-lg flex flex-col items-center justify-center gap-3 cursor-pointer min-h-[105px] sm:min-h-[115px] shadow-2xl transition-all border border-emerald-300/40"
+            >
+              <CheckCircle2 className="w-8 h-8 text-slate-950 flex-shrink-0" />
+              <span>Submit Test</span>
+            </motion.button>
+          </div>
         </div>
       </div>
     </PageTransition>
