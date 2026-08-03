@@ -1,8 +1,8 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { PageTransition } from '@/components/layout/PageTransition';
 import { Brain } from 'lucide-react';
-import { EMOJI_POOL, EMOJI_ROUNDS, EMOJI_COUNT, EMOJI_DISPLAY_TIME, RECALL_TIME_LIMIT_SEC } from '@/lib/constants';
+import { EMOJI_POOL, EMOJI_ROUNDS, EMOJI_COUNT, EMOJI_DISPLAY_TIME } from '@/lib/constants';
 import { pickRandom } from '@/lib/utils';
 import type { EmojiMemoryResult } from '@/types/assessment';
 
@@ -41,14 +41,7 @@ export function EmojiMemoryTest({ onComplete }: EmojiMemoryTestProps) {
     }, EMOJI_DISPLAY_TIME);
   }, []);
 
-  const [recallTimeLeft, setRecallTimeLeft] = useState<number>(RECALL_TIME_LIMIT_SEC);
-  const recallTimerRef = useRef<any>(null);
-  const selectedEmojisRef = useRef<string[]>([]);
-  selectedEmojisRef.current = selectedEmojis;
-
   const finishRound = useCallback((finalSelections: string[]) => {
-    if (recallTimerRef.current) clearInterval(recallTimerRef.current);
-
     const timeTaken = (performance.now() - roundStartRef.current) / 1000;
     let correct = 0;
     let mistakes = 0;
@@ -89,27 +82,6 @@ export function EmojiMemoryTest({ onComplete }: EmojiMemoryTestProps) {
       }
     }, 1500);
   }, [round, roundResults, targetEmojis, totalMistakes, startRound, onComplete]);
-
-  useEffect(() => {
-    if (phase === 'recall') {
-      setRecallTimeLeft(RECALL_TIME_LIMIT_SEC);
-      const interval = setInterval(() => {
-        setRecallTimeLeft((prev) => {
-          if (prev <= 1) {
-            clearInterval(interval);
-            finishRound(selectedEmojisRef.current);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-      recallTimerRef.current = interval;
-
-      return () => {
-        clearInterval(interval);
-      };
-    }
-  }, [phase, finishRound]);
 
   const handleSelect = (emoji: string) => {
     if (selectedEmojis.includes(emoji)) {
@@ -210,13 +182,9 @@ export function EmojiMemoryTest({ onComplete }: EmojiMemoryTestProps) {
           </div>
         )}
 
-        {/* Recall phase — show choices & timer badge */}
+        {/* Recall phase — show choices */}
         {phase === 'recall' && (
           <>
-            <div className="mb-3 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-xs font-bold text-teal-400">
-              ⏱️ Time Limit: <span className="text-white font-extrabold">{recallTimeLeft}s</span>
-            </div>
-
             {/* Selected display */}
             <div className="flex gap-2.5 sm:gap-3 mb-6 min-h-[4.5rem] justify-center items-center">
               {Array.from({ length: EMOJI_COUNT }).map((_, i) => (
