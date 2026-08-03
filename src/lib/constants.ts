@@ -30,13 +30,13 @@ export const EYE_CONTACT_PASS_PERCENTAGE = 80; // % eye contact required to pass
 // Signal Light test constants
 export const SIGNAL_LIGHT_ROUNDS = 3;
 
-// Scoring weights: Drawing & Emoji 25% each, Grid & Voice 15% each, Signal Light 20%
+// Scoring weights: Signal Light (Last Test) 35%, Drawing & Voice 20% each, Emoji 13%, Grid 12%
 export const SCORE_WEIGHTS = {
-  drawing: 0.25,
-  emojiMemory: 0.25,
-  gridMemory: 0.15,
-  voice: 0.15,
-  signalLight: 0.20,
+  drawing: 0.20,
+  emojiMemory: 0.13,
+  gridMemory: 0.12,
+  voice: 0.20,
+  signalLight: 0.35,
 } as const;
 
 // Verdict thresholds (80%+ is passing score)
