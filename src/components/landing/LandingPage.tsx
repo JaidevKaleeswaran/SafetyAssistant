@@ -95,6 +95,18 @@ export function LandingPage() {
           </div>
           <div className="absolute inset-0 rounded-3xl glow-blue opacity-60 pointer-events-none" />
         </motion.button>
+
+        {/* Author Credit anchored at bottom of screen */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.75, duration: 0.6 }}
+          className="absolute bottom-6 sm:bottom-8 left-0 right-0 text-center pointer-events-none"
+        >
+          <p className="text-lg sm:text-xl font-bold tracking-widest text-slate-300 uppercase drop-shadow-lg">
+            By <span className="text-2xl sm:text-3xl font-black text-white tracking-tight drop-shadow-[0_0_20px_rgba(59,130,246,0.6)]">Jaidev Kaleeswaran</span>
+          </p>
+        </motion.div>
       </div>
     </PageTransition>
   );
