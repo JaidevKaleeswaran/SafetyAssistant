@@ -8,7 +8,7 @@ interface DrawingTestProps {
   onComplete: (result: DrawingTestResult) => void;
 }
 
-const TEST_DURATION_SEC = 15;
+const TEST_DURATION_SEC = 10;
 const BOX_SIZE_PX = 92; // Size of moving target box
 
 export function DrawingTest({ onComplete }: DrawingTestProps) {

@@ -1,8 +1,8 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { PageTransition } from '@/components/layout/PageTransition';
 import { Brain } from 'lucide-react';
-import { EMOJI_POOL, EMOJI_ROUNDS, EMOJI_COUNT, EMOJI_DISPLAY_TIME } from '@/lib/constants';
+import { EMOJI_POOL, EMOJI_ROUNDS, EMOJI_COUNT, EMOJI_DISPLAY_TIME, RECALL_TIME_LIMIT_SEC } from '@/lib/constants';
 import { pickRandom } from '@/lib/utils';
 import type { EmojiMemoryResult } from '@/types/assessment';
 
@@ -41,6 +41,76 @@ export function EmojiMemoryTest({ onComplete }: EmojiMemoryTestProps) {
     }, EMOJI_DISPLAY_TIME);
   }, []);
 
+  const [recallTimeLeft, setRecallTimeLeft] = useState<number>(RECALL_TIME_LIMIT_SEC);
+  const recallTimerRef = useRef<any>(null);
+  const selectedEmojisRef = useRef<string[]>([]);
+  selectedEmojisRef.current = selectedEmojis;
+
+  const finishRound = useCallback((finalSelections: string[]) => {
+    if (recallTimerRef.current) clearInterval(recallTimerRef.current);
+
+    const timeTaken = (performance.now() - roundStartRef.current) / 1000;
+    let correct = 0;
+    let mistakes = 0;
+
+    finalSelections.forEach((sel, i) => {
+      if (sel === targetEmojis[i]) {
+        correct++;
+      } else {
+        mistakes++;
+      }
+    });
+
+    setTotalMistakes((prev) => prev + mistakes);
+    const newResults = [...roundResults, { correct, total: EMOJI_COUNT, time: timeTaken }];
+    setRoundResults(newResults);
+
+    setPhase('feedback');
+
+    const nextRound = round + 1;
+
+    setTimeout(() => {
+      if (nextRound >= EMOJI_ROUNDS) {
+        setPhase('done');
+        const avgAccuracy = (newResults.reduce((sum, r) => sum + (r.correct / r.total) * 100, 0)) / newResults.length;
+        const avgTime = newResults.reduce((sum, r) => sum + r.time, 0) / newResults.length;
+
+        setTimeout(() => {
+          onComplete({
+            accuracy: avgAccuracy,
+            timeTaken: avgTime,
+            mistakes: totalMistakes + mistakes,
+            rounds: newResults,
+          });
+        }, 1000);
+      } else {
+        setRound(nextRound);
+        startRound();
+      }
+    }, 1500);
+  }, [round, roundResults, targetEmojis, totalMistakes, startRound, onComplete]);
+
+  useEffect(() => {
+    if (phase === 'recall') {
+      setRecallTimeLeft(RECALL_TIME_LIMIT_SEC);
+      const interval = setInterval(() => {
+        setRecallTimeLeft((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            finishRound(selectedEmojisRef.current);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      recallTimerRef.current = interval;
+
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, [phase, finishRound]);
+
   const handleSelect = (emoji: string) => {
     if (selectedEmojis.includes(emoji)) {
       setSelectedEmojis((prev) => prev.filter((e) => e !== emoji));
@@ -52,46 +122,7 @@ export function EmojiMemoryTest({ onComplete }: EmojiMemoryTestProps) {
     setSelectedEmojis(newSelected);
 
     if (newSelected.length === EMOJI_COUNT) {
-      // Score this round
-      const timeTaken = (performance.now() - roundStartRef.current) / 1000;
-      let correct = 0;
-      let mistakes = 0;
-
-      newSelected.forEach((sel, i) => {
-        if (sel === targetEmojis[i]) {
-          correct++;
-        } else {
-          mistakes++;
-        }
-      });
-
-      setTotalMistakes((prev) => prev + mistakes);
-      const newResults = [...roundResults, { correct, total: EMOJI_COUNT, time: timeTaken }];
-      setRoundResults(newResults);
-
-      setPhase('feedback');
-
-      const nextRound = round + 1;
-
-      setTimeout(() => {
-        if (nextRound >= EMOJI_ROUNDS) {
-          setPhase('done');
-          const avgAccuracy = (newResults.reduce((sum, r) => sum + (r.correct / r.total) * 100, 0)) / newResults.length;
-          const avgTime = newResults.reduce((sum, r) => sum + r.time, 0) / newResults.length;
-
-          setTimeout(() => {
-            onComplete({
-              accuracy: avgAccuracy,
-              timeTaken: avgTime,
-              mistakes: totalMistakes + mistakes,
-              rounds: newResults,
-            });
-          }, 1000);
-        } else {
-          setRound(nextRound);
-          startRound();
-        }
-      }, 1500);
+      finishRound(newSelected);
     }
   };
 
@@ -179,9 +210,13 @@ export function EmojiMemoryTest({ onComplete }: EmojiMemoryTestProps) {
           </div>
         )}
 
-        {/* Recall phase — show choices */}
+        {/* Recall phase — show choices & timer badge */}
         {phase === 'recall' && (
           <>
+            <div className="mb-3 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-xs font-bold text-teal-400">
+              ⏱️ Time Limit: <span className="text-white font-extrabold">{recallTimeLeft}s</span>
+            </div>
+
             {/* Selected display */}
             <div className="flex gap-2.5 sm:gap-3 mb-6 min-h-[4.5rem] justify-center items-center">
               {Array.from({ length: EMOJI_COUNT }).map((_, i) => (

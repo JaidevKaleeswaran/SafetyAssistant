@@ -47,7 +47,7 @@ const SIGNAL_CONFIG: Record<
     label: 'Yellow Signal Light',
     voicePhrase: 'Yellow Light',
     displayText: 'YELLOW',
-    subtitle: 'Click the CAUTION signal light circle',
+    subtitle: 'Click the SLOW signal light circle',
     activeColor: '#F59E0B',
     glowColor: 'rgba(245, 158, 11, 0.6)',
     borderColor: 'border-amber-500',
@@ -80,6 +80,7 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
 
   const roundStartTimeRef = useRef<number>(0);
   const previousColorRef = useRef<SignalColor | null>(null);
+  const roundTimeoutRef = useRef<any>(null);
 
   // Play voice prompt using ElevenLabs TTS with Web Speech fallback
   const speakCommand = useCallback(async (color: SignalColor) => {
@@ -115,9 +116,7 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
           const audio = new Audio(audioUrl);
 
           audio.onended = () => {
-            setIsPlayingAudio(false);
-            setCanTap(true);
-            roundStartTimeRef.current = performance.now();
+            startTappingPhase();
           };
           audio.onerror = () => {
             fallbackSpeech(config.voicePhrase);
@@ -133,6 +132,17 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
     fallbackSpeech(config.voicePhrase);
   }, []);
 
+  const startTappingPhase = () => {
+    setIsPlayingAudio(false);
+    setCanTap(true);
+    roundStartTimeRef.current = performance.now();
+
+    if (roundTimeoutRef.current) clearTimeout(roundTimeoutRef.current);
+    roundTimeoutRef.current = setTimeout(() => {
+      handleCircleTap(null);
+    }, 10000);
+  };
+
   const fallbackSpeech = (text: string) => {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
@@ -140,21 +150,11 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
       utterance.rate = 1.0;
       utterance.pitch = 1.0;
       utterance.onstart = () => setIsPlayingAudio(true);
-      utterance.onend = () => {
-        setIsPlayingAudio(false);
-        setCanTap(true);
-        roundStartTimeRef.current = performance.now();
-      };
-      utterance.onerror = () => {
-        setIsPlayingAudio(false);
-        setCanTap(true);
-        roundStartTimeRef.current = performance.now();
-      };
+      utterance.onend = () => startTappingPhase();
+      utterance.onerror = () => startTappingPhase();
       window.speechSynthesis.speak(utterance);
     } else {
-      setIsPlayingAudio(false);
-      setCanTap(true);
-      roundStartTimeRef.current = performance.now();
+      startTappingPhase();
     }
   };
 
@@ -185,17 +185,20 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
     startRound(0);
   };
 
-  const handleCircleTap = (selectedColor: SignalColor) => {
+  const handleCircleTap = (selectedColor: SignalColor | null) => {
     if (!canTap || phase !== 'playing') return;
+    if (roundTimeoutRef.current) clearTimeout(roundTimeoutRef.current);
 
-    const reactionTimeMs = Math.round(performance.now() - roundStartTimeRef.current);
+    const reactionTimeMs = selectedColor
+      ? Math.round(performance.now() - roundStartTimeRef.current)
+      : 10000;
     const isCorrect = selectedColor === targetColor;
 
     setCanTap(false);
 
     const roundData: RoundDetail = {
       command: targetColor,
-      selected: selectedColor,
+      selected: selectedColor || ('none' as any),
       correct: isCorrect,
       reactionTimeMs,
     };
@@ -206,7 +209,7 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
     setLastFeedback({
       correct: isCorrect,
       reactionMs: reactionTimeMs,
-      selected: selectedColor,
+      selected: selectedColor || ('none' as any),
     });
     setPhase('roundFeedback');
 
@@ -379,7 +382,7 @@ export function SignalLightTest({ onComplete }: SignalLightTestProps) {
 
                   {/* Label inside circle */}
                   <span className="text-white font-extrabold text-sm sm:text-base tracking-wider uppercase drop-shadow-md">
-                    {color === 'red' ? 'STOP' : color === 'yellow' ? 'CAUTION' : 'GO'}
+                    {color === 'red' ? 'STOP' : color === 'yellow' ? 'SLOW' : 'GO'}
                   </span>
 
                   {/* Feedback Overlay inside clicked button */}

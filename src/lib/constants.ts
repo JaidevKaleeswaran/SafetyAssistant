@@ -15,13 +15,14 @@ export const REACTION_THRESHOLDS = {
 
 // Number of rounds per test
 export const REACTION_ROUNDS = 5;
-export const EMOJI_ROUNDS = 3;
+export const EMOJI_ROUNDS = 2;
 export const EMOJI_COUNT = 4;
 export const EMOJI_DISPLAY_TIME = 4000; // ms
-export const GRID_ROUNDS = 3;
+export const GRID_ROUNDS = 2;
 export const GRID_SIZE = 4;
 export const GRID_HIGHLIGHT_COUNT = 4;
-export const GRID_DISPLAY_TIME = 5000; // ms
+export const GRID_DISPLAY_TIME = 3000; // 3 seconds to memorize
+export const RECALL_TIME_LIMIT_SEC = 10; // 10 seconds recall timeout per round
 
 // Eye Contact test constants
 export const EYE_CONTACT_DURATION = 15; // seconds

@@ -1,10 +1,10 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { PageTransition } from '@/components/layout/PageTransition';
 import { CountdownRing } from '@/components/shared/CountdownRing';
 import { useCountdown } from '@/hooks/useCountdown';
 import { Grid3X3 } from 'lucide-react';
-import { GRID_ROUNDS, GRID_SIZE, GRID_HIGHLIGHT_COUNT, GRID_DISPLAY_TIME } from '@/lib/constants';
+import { GRID_ROUNDS, GRID_SIZE, GRID_HIGHLIGHT_COUNT, GRID_DISPLAY_TIME, RECALL_TIME_LIMIT_SEC } from '@/lib/constants';
 import { randomGridPositions } from '@/lib/utils';
 import type { GridMemoryResult } from '@/types/assessment';
 
@@ -21,7 +21,11 @@ export function GridMemoryTest({ onComplete }: GridMemoryTestProps) {
   const [selectedCells, setSelectedCells] = useState<number[]>([]);
   const [roundResults, setRoundResults] = useState<{ correct: number; total: number; time: number }[]>([]);
   const [totalMistakes, setTotalMistakes] = useState(0);
+  const [recallTimeLeft, setRecallTimeLeft] = useState<number>(RECALL_TIME_LIMIT_SEC);
   const roundStartRef = useRef(0);
+  const recallTimerRef = useRef<any>(null);
+  const selectedCellsRef = useRef<number[]>([]);
+  selectedCellsRef.current = selectedCells;
 
   const countdown = useCountdown(GRID_DISPLAY_TIME, () => {
     setPhase('recall');
@@ -36,20 +40,12 @@ export function GridMemoryTest({ onComplete }: GridMemoryTestProps) {
     countdown.start();
   }, [countdown]);
 
-  const handleCellClick = (index: number) => {
-    if (phase !== 'recall') return;
+  const executeSubmit = useCallback((finalSelections: number[]) => {
+    if (recallTimerRef.current) clearInterval(recallTimerRef.current);
 
-    if (selectedCells.includes(index)) {
-      setSelectedCells((prev) => prev.filter((c) => c !== index));
-    } else if (selectedCells.length < GRID_HIGHLIGHT_COUNT) {
-      setSelectedCells((prev) => [...prev, index]);
-    }
-  };
-
-  const handleSubmit = () => {
     const timeTaken = (performance.now() - roundStartRef.current) / 1000;
-    const correct = selectedCells.filter((c) => highlightedCells.includes(c)).length;
-    const mistakes = selectedCells.filter((c) => !highlightedCells.includes(c)).length;
+    const correct = finalSelections.filter((c) => highlightedCells.includes(c)).length;
+    const mistakes = finalSelections.filter((c) => !highlightedCells.includes(c)).length;
 
     setTotalMistakes((prev) => prev + mistakes);
     const newResults = [...roundResults, { correct, total: GRID_HIGHLIGHT_COUNT, time: timeTaken }];
@@ -78,6 +74,41 @@ export function GridMemoryTest({ onComplete }: GridMemoryTestProps) {
         startRound();
       }
     }, 1500);
+  }, [round, roundResults, highlightedCells, totalMistakes, startRound, onComplete]);
+
+  useEffect(() => {
+    if (phase === 'recall') {
+      setRecallTimeLeft(RECALL_TIME_LIMIT_SEC);
+      const interval = setInterval(() => {
+        setRecallTimeLeft((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            executeSubmit(selectedCellsRef.current);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      recallTimerRef.current = interval;
+
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, [phase, executeSubmit]);
+
+  const handleCellClick = (index: number) => {
+    if (phase !== 'recall') return;
+
+    if (selectedCells.includes(index)) {
+      setSelectedCells((prev) => prev.filter((c) => c !== index));
+    } else if (selectedCells.length < GRID_HIGHLIGHT_COUNT) {
+      setSelectedCells((prev) => [...prev, index]);
+    }
+  };
+
+  const handleSubmit = () => {
+    executeSubmit(selectedCells);
   };
 
   const totalCells = GRID_SIZE * GRID_SIZE;
@@ -144,6 +175,13 @@ export function GridMemoryTest({ onComplete }: GridMemoryTestProps) {
           </div>
         )}
 
+        {/* Recall phase timer badge */}
+        {phase === 'recall' && (
+          <div className="mb-4 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-xs font-bold text-emerald-400">
+            ⏱️ Time Limit: <span className="text-white font-extrabold">{recallTimeLeft}s</span>
+          </div>
+        )}
+
         {/* Grid */}
         {(phase === 'display' || phase === 'recall') && (
           <div
@@ -176,14 +214,21 @@ export function GridMemoryTest({ onComplete }: GridMemoryTestProps) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.05, boxShadow: '0 0 35px rgba(16, 185, 129, 0.6)' }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleSubmit}
-            disabled={selectedCells.length !== GRID_HIGHLIGHT_COUNT}
-            className="mt-8 w-full max-w-xs sm:max-w-sm py-5 px-8 rounded-2xl text-white font-semibold text-sm sm:text-base cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed text-center flex items-center justify-center"
-            style={{ background: selectedCells.length === GRID_HIGHLIGHT_COUNT ? 'linear-gradient(135deg, #3B82F6, #2563EB)' : 'rgba(255,255,255,0.1)' }}
+            disabled={selectedCells.length === 0}
+            className="mt-6 w-full max-w-sm sm:max-w-md py-6 px-10 rounded-3xl min-h-[72px] text-white font-black text-xl sm:text-2xl cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed text-center flex items-center justify-center gap-3 shadow-2xl transition-all border border-emerald-400/40"
+            style={{
+              background: selectedCells.length > 0
+                ? 'linear-gradient(135deg, #10B981, #14B8A6)'
+                : 'rgba(255,255,255,0.1)',
+            }}
           >
-            Submit ({selectedCells.length}/{GRID_HIGHLIGHT_COUNT})
+            <span>Submit Pattern</span>
+            <span className="text-sm font-extrabold px-3 py-1 rounded-full bg-slate-950/40 text-emerald-200">
+              {selectedCells.length}/{GRID_HIGHLIGHT_COUNT}
+            </span>
           </motion.button>
         )}
 
