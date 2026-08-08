@@ -1,3 +1,7 @@
+// Auto start timer & balance duration
+export const AUTO_START_DURATION_SEC = 7;
+export const BALANCE_DURATION_SEC = 15;
+
 // Emoji pools for memory test (100% Universal Mobile Codepoints)
 export const EMOJI_POOL = [
   '🍕', '🐱', '⭐', '🐶', '🚀', '🍎', '🚗', '🎧',
@@ -31,13 +35,14 @@ export const EYE_CONTACT_PASS_PERCENTAGE = 80; // % eye contact required to pass
 // Signal Light test constants
 export const SIGNAL_LIGHT_ROUNDS = 3;
 
-// Scoring weights: Signal Light (Last Test) 35%, Drawing & Voice 20% each, Emoji 13%, Grid 12%
+// Scoring weights: Total = 100%
 export const SCORE_WEIGHTS = {
-  drawing: 0.20,
-  emojiMemory: 0.13,
-  gridMemory: 0.12,
-  voice: 0.20,
-  signalLight: 0.35,
+  drawing: 0.18,
+  balance: 0.15,
+  emojiMemory: 0.12,
+  gridMemory: 0.10,
+  voice: 0.18,
+  signalLight: 0.27,
 } as const;
 
 // Verdict thresholds (80%+ is passing score)

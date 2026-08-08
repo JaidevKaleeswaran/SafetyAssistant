@@ -5,12 +5,14 @@ import { useAssessment } from '@/hooks/useAssessment';
 import { calculateAssessment } from '@/lib/scoring';
 import { ProgressBar } from '@/components/shared/ProgressBar';
 import { DrawingTest } from './DrawingTest';
+import { BalanceTest } from './BalanceTest';
 import { EmojiMemoryTest } from './EmojiMemoryTest';
 import { GridMemoryTest } from './GridMemoryTest';
 import { VoiceTest } from './VoiceTest';
 import { SignalLightTest } from './SignalLightTest';
 import type {
   DrawingTestResult,
+  BalanceTestResult,
   EmojiMemoryResult,
   GridMemoryResult,
   VoiceTestResult,
@@ -23,6 +25,11 @@ export function AssessmentFlow() {
 
   const handleDrawingComplete = (result: DrawingTestResult) => {
     dispatch({ type: 'SET_DRAWING', payload: result });
+    dispatch({ type: 'NEXT_STEP' });
+  };
+
+  const handleBalanceComplete = (result: BalanceTestResult) => {
+    dispatch({ type: 'SET_BALANCE', payload: result });
     dispatch({ type: 'NEXT_STEP' });
   };
 
@@ -44,12 +51,19 @@ export function AssessmentFlow() {
   const handleSignalLightComplete = (result: SignalLightResult) => {
     dispatch({ type: 'SET_SIGNAL_LIGHT', payload: result });
 
-    // Calculate final result with all 5 test scores
     const drawing: DrawingTestResult = state.drawingResult || state.eyeContactResult || {
       accuracy: 85,
       completionTime: 8,
       avgDeviationPx: 4,
       offPathCount: 1,
+      passed: true,
+    };
+    const balance: BalanceTestResult = state.balanceResult || {
+      stabilityScore: 90,
+      completionTime: 15,
+      avgTiltDegrees: 2.0,
+      maxTiltDegrees: 5.0,
+      wobbleCount: 0,
       passed: true,
     };
     const emoji: EmojiMemoryResult = state.emojiResult || {
@@ -73,7 +87,7 @@ export function AssessmentFlow() {
       slurScore: 80,
     };
 
-    const finalResult = calculateAssessment(drawing, emoji, grid, voice, result);
+    const finalResult = calculateAssessment(drawing, balance, emoji, grid, voice, result);
     dispatch({ type: 'SET_FINAL', payload: finalResult });
 
     navigate('/results');
@@ -91,6 +105,16 @@ export function AssessmentFlow() {
         });
         break;
       case 1:
+        handleBalanceComplete({
+          stabilityScore: 0,
+          completionTime: 15,
+          avgTiltDegrees: 20,
+          maxTiltDegrees: 35,
+          wobbleCount: 5,
+          passed: false,
+        });
+        break;
+      case 2:
         handleEmojiComplete({
           accuracy: 0,
           timeTaken: 10,
@@ -98,7 +122,7 @@ export function AssessmentFlow() {
           rounds: [],
         });
         break;
-      case 2:
+      case 3:
         handleGridComplete({
           accuracy: 0,
           completionTime: 10,
@@ -106,7 +130,7 @@ export function AssessmentFlow() {
           rounds: [],
         });
         break;
-      case 3:
+      case 4:
         handleVoiceComplete({
           completed: true,
           duration: 0,
@@ -116,7 +140,7 @@ export function AssessmentFlow() {
           slurScore: 0,
         });
         break;
-      case 4:
+      case 5:
         handleSignalLightComplete({
           accuracy: 0,
           avgReactionTime: 2000,
@@ -132,12 +156,14 @@ export function AssessmentFlow() {
       case 0:
         return <DrawingTest key="drawing" onComplete={handleDrawingComplete} />;
       case 1:
-        return <EmojiMemoryTest key="emoji" onComplete={handleEmojiComplete} />;
+        return <BalanceTest key="balance" onComplete={handleBalanceComplete} />;
       case 2:
-        return <GridMemoryTest key="grid" onComplete={handleGridComplete} />;
+        return <EmojiMemoryTest key="emoji" onComplete={handleEmojiComplete} />;
       case 3:
-        return <VoiceTest key="voice" onComplete={handleVoiceComplete} />;
+        return <GridMemoryTest key="grid" onComplete={handleGridComplete} />;
       case 4:
+        return <VoiceTest key="voice" onComplete={handleVoiceComplete} />;
+      case 5:
         return <SignalLightTest key="signalLight" onComplete={handleSignalLightComplete} />;
       default:
         return null;

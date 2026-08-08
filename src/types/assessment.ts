@@ -8,6 +8,15 @@ export interface DrawingTestResult {
 
 export type EyeContactTestResult = DrawingTestResult;
 
+export interface BalanceTestResult {
+  stabilityScore: number;
+  completionTime: number;
+  avgTiltDegrees: number;
+  maxTiltDegrees: number;
+  wobbleCount: number;
+  passed: boolean;
+}
+
 export interface EmojiMemoryResult {
   accuracy: number;
   timeTaken: number;
@@ -46,6 +55,7 @@ export interface SignalLightResult {
 
 export interface TestScores {
   drawing: number;
+  balance: number;
   eyeContact?: number;
   emojiMemory: number;
   gridMemory: number;
@@ -63,11 +73,12 @@ export interface AssessmentResult {
   testScores: TestScores;
 }
 
-export type TestStep = 'drawing' | 'emoji' | 'grid' | 'voice' | 'signalLight';
+export type TestStep = 'drawing' | 'balance' | 'emoji' | 'grid' | 'voice' | 'signalLight';
 
 export interface AssessmentState {
   currentStep: number;
   drawingResult: DrawingTestResult | null;
+  balanceResult: BalanceTestResult | null;
   eyeContactResult?: EyeContactTestResult | null;
   emojiResult: EmojiMemoryResult | null;
   gridResult: GridMemoryResult | null;
@@ -76,4 +87,4 @@ export interface AssessmentState {
   finalResult: AssessmentResult | null;
 }
 
-export const TEST_STEPS: TestStep[] = ['drawing', 'emoji', 'grid', 'voice', 'signalLight'];
+export const TEST_STEPS: TestStep[] = ['drawing', 'balance', 'emoji', 'grid', 'voice', 'signalLight'];

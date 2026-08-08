@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { PageTransition } from '@/components/layout/PageTransition';
+import { AutoStartTimerBar } from '@/components/shared/AutoStartTimerBar';
 import { CountdownRing } from '@/components/shared/CountdownRing';
 import { useCountdown } from '@/hooks/useCountdown';
 import { Grid3X3 } from 'lucide-react';
@@ -117,6 +118,9 @@ export function GridMemoryTest({ onComplete }: GridMemoryTestProps) {
     return (
       <PageTransition>
         <div className="w-full flex-1 flex flex-col items-center justify-between text-center px-6 py-6 sm:py-10 max-w-md sm:max-w-lg mx-auto min-h-[480px] sm:min-h-[520px]">
+          {/* 7-Second Auto-Start Progress Bar */}
+          <AutoStartTimerBar duration={7} onAutoStart={startRound} />
+
           {/* Top: Title & Subtitle */}
           <div className="space-y-3 pt-2">
             <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight">

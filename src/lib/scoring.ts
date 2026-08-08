@@ -1,5 +1,6 @@
 import type {
   DrawingTestResult,
+  BalanceTestResult,
   EmojiMemoryResult,
   GridMemoryResult,
   VoiceTestResult,
@@ -14,6 +15,11 @@ import { clamp } from './utils';
 /** Score the Shape Tracing Drawing Test (0–100) */
 export function scoreDrawingTest(result: DrawingTestResult): number {
   return clamp(Math.round(result.accuracy), 0, 100);
+}
+
+/** Score the Palm Balance Test (0–100) */
+export function scoreBalanceTest(result: BalanceTestResult): number {
+  return clamp(Math.round(result.stabilityScore), 0, 100);
 }
 
 /** Legacy alias for scoreDrawingTest */
@@ -38,7 +44,6 @@ export function scoreVoice(result: VoiceTestResult): number {
     baseScore = result.completed ? 100 : 0;
   }
 
-  // If slurring score is explicitly available, factor it in
   if (typeof result.slurScore === 'number') {
     baseScore = baseScore * 0.6 + result.slurScore * 0.4;
   } else if (result.slurringDetected) {
@@ -48,10 +53,9 @@ export function scoreVoice(result: VoiceTestResult): number {
   return clamp(Math.round(baseScore), 0, 100);
 }
 
-/** Score the Signal Light Test (0–100): 70% accuracy + 30% reaction speed */
+/** Score the Signal Light Test (0–100) */
 export function scoreSignalLight(result: SignalLightResult): number {
-  const accuracyScore = result.accuracy; // 0-100%
-
+  const accuracyScore = result.accuracy;
   let reactionScore = 100;
   if (result.avgReactionTime > 400) {
     const penalty = ((result.avgReactionTime - 400) / 1600) * 100;
@@ -62,25 +66,24 @@ export function scoreSignalLight(result: SignalLightResult): number {
   return clamp(Math.round(combined), 0, 100);
 }
 
-/** Determine verdict from weighted score (80%+ is passing) */
 function getVerdict(score: number): SobrietyVerdict {
   if (score >= VERDICT_THRESHOLDS.sober) return 'sober';
   if (score >= VERDICT_THRESHOLDS.mildlyImpaired) return 'mildlyImpaired';
   return 'severelyImpaired';
 }
 
-/** Generate a human-readable summary based on test scores */
 function generateSummary(scores: TestScores, verdict: SobrietyVerdict): string {
   const issues: string[] = [];
 
   if (scores.drawing < 80) issues.push('Reduced fine motor tracing precision or off-path straying detected');
+  if (scores.balance < 80) issues.push('Device tilt wobble or instability detected during palm balance test');
   if (scores.emojiMemory < 80) issues.push('Your emoji recall accuracy was below normal');
   if (scores.gridMemory < 80) issues.push('Your visual pattern memory showed reduced accuracy');
   if (scores.voice < 80) issues.push('Voice repetition showed articulation slurring or match inaccuracies');
   if (scores.signalLight < 80) issues.push('Signal light voice command reaction was delayed or incorrect');
 
   if (verdict === 'sober') {
-    return 'Your fine motor control, memory recall, voice articulation, and signal light reaction passed with flying colors across all tests (80%+). No meaningful impairment was detected. Drive safely!';
+    return 'Your fine motor control, palm balance stability, memory recall, voice articulation, and signal light reaction passed with flying colors across all tests (80%+). No meaningful impairment was detected. Drive safely!';
   }
 
   if (verdict === 'mildlyImpaired') {
@@ -92,7 +95,6 @@ function generateSummary(scores: TestScores, verdict: SobrietyVerdict): string {
   return `${issueText} For your safety and the safety of others, we strongly recommend choosing a safe ride home.`;
 }
 
-/** Calculate confidence based on how consistent the test results are */
 function calculateConfidence(scores: TestScores, verdict: SobrietyVerdict): number {
   const values = Object.values(scores).filter((v) => typeof v === 'number') as number[];
   const avg = values.reduce((a, b) => a + b, 0) / values.length;
@@ -107,9 +109,9 @@ function calculateConfidence(scores: TestScores, verdict: SobrietyVerdict): numb
   return clamp(Math.round(confidence), 50, 99);
 }
 
-/** Main scoring function — takes all 5 test results and produces final assessment */
 export function calculateAssessment(
   drawing: DrawingTestResult,
+  balance: BalanceTestResult,
   emoji: EmojiMemoryResult,
   grid: GridMemoryResult,
   voice: VoiceTestResult,
@@ -117,6 +119,7 @@ export function calculateAssessment(
 ): AssessmentResult {
   const testScores: TestScores = {
     drawing: scoreDrawingTest(drawing),
+    balance: scoreBalanceTest(balance),
     emojiMemory: scoreEmojiMemory(emoji),
     gridMemory: scoreGridMemory(grid),
     voice: scoreVoice(voice),
@@ -125,6 +128,7 @@ export function calculateAssessment(
 
   const weightedScore = Math.round(
     testScores.drawing * SCORE_WEIGHTS.drawing +
+    testScores.balance * SCORE_WEIGHTS.balance +
     testScores.emojiMemory * SCORE_WEIGHTS.emojiMemory +
     testScores.gridMemory * SCORE_WEIGHTS.gridMemory +
     testScores.voice * SCORE_WEIGHTS.voice +

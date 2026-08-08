@@ -127,6 +127,14 @@ export function ResultsPage() {
                   failText: 'Reduced tracking precision',
                 },
                 {
+                  label: 'Palm Balance Stability',
+                  score: result.testScores.balance ?? 0,
+                  icon: <span className="text-sm">⚖️</span>,
+                  iconBg: 'bg-teal-500/20 text-teal-400',
+                  passText: 'Steady device posture',
+                  failText: 'Tilt wobble detected',
+                },
+                {
                   label: 'Emoji Memory Recall',
                   score: result.testScores.emojiMemory ?? 0,
                   icon: <span className="text-sm">🧠</span>,
@@ -146,7 +154,7 @@ export function ResultsPage() {
                   label: 'Voice & Articulation',
                   score: result.testScores.voice ?? 0,
                   icon: <Mic className="w-4 h-4" />,
-                  iconBg: 'bg-teal-500/20 text-teal-400',
+                  iconBg: 'bg-cyan-500/20 text-cyan-400',
                   passText: 'Clear speech articulation',
                   failText: 'Hesitation or slurring detected',
                 },

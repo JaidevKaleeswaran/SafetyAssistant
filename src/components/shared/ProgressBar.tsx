@@ -5,7 +5,7 @@ interface ProgressBarProps {
   currentStep: number;
 }
 
-const stepLabels = ['Object Tracking', 'Emoji Memory', 'Pattern', 'Voice AI', 'Signal Light'];
+const stepLabels = ['Object Tracking', 'Palm Balance', 'Emoji Memory', 'Pattern', 'Voice AI', 'Signal Light'];
 
 export function ProgressBar({ currentStep }: ProgressBarProps) {
   const progress = ((currentStep + 1) / TEST_STEPS.length) * 100;
@@ -16,7 +16,7 @@ export function ProgressBar({ currentStep }: ProgressBarProps) {
         {stepLabels.map((label, i) => (
           <span
             key={label}
-            className={`text-[10px] sm:text-xs font-semibold transition-colors duration-300 ${
+            className={`text-[9px] sm:text-xs font-semibold transition-colors duration-300 ${
               i <= currentStep ? 'text-blue-400' : 'text-slate-500'
             }`}
           >

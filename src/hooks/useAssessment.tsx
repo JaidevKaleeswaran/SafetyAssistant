@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer, type ReactNode } from 'react';
 import type {
   AssessmentState,
   DrawingTestResult,
+  BalanceTestResult,
   EyeContactTestResult,
   EmojiMemoryResult,
   GridMemoryResult,
@@ -13,6 +14,7 @@ import type {
 const initialState: AssessmentState = {
   currentStep: 0,
   drawingResult: null,
+  balanceResult: null,
   eyeContactResult: null,
   emojiResult: null,
   gridResult: null,
@@ -23,6 +25,7 @@ const initialState: AssessmentState = {
 
 type Action =
   | { type: 'SET_DRAWING'; payload: DrawingTestResult }
+  | { type: 'SET_BALANCE'; payload: BalanceTestResult }
   | { type: 'SET_EYE_CONTACT'; payload: EyeContactTestResult }
   | { type: 'SET_EMOJI'; payload: EmojiMemoryResult }
   | { type: 'SET_GRID'; payload: GridMemoryResult }
@@ -36,6 +39,8 @@ function reducer(state: AssessmentState, action: Action): AssessmentState {
   switch (action.type) {
     case 'SET_DRAWING':
       return { ...state, drawingResult: action.payload };
+    case 'SET_BALANCE':
+      return { ...state, balanceResult: action.payload };
     case 'SET_EYE_CONTACT':
       return { ...state, eyeContactResult: action.payload, drawingResult: action.payload };
     case 'SET_EMOJI':

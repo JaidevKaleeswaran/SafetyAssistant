@@ -1,0 +1,351 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000012C68000100000001 /* SafetyBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000002 /* SafetyBuddyApp.swift */; };
+		A10000012C68000100000003 /* AssessmentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000004 /* AssessmentModels.swift */; };
+		A10000012C68000100000005 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000006 /* Constants.swift */; };
+		A10000012C68000100000007 /* ScoringEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000008 /* ScoringEngine.swift */; };
+		A10000012C68000100000009 /* SpeechRecognitionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C6800010000000A /* SpeechRecognitionService.swift */; };
+		A10000012C6800010000000B /* AssessmentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C6800010000000C /* AssessmentViewModel.swift */; };
+		A10000012C6800010000000D /* LandingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C6800010000000E /* LandingView.swift */; };
+		A10000012C6800010000000F /* AssessmentFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000010 /* AssessmentFlowView.swift */; };
+		A10000012C68000100000011 /* DrawingTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000012 /* DrawingTestView.swift */; };
+		A10000012C68000100000013 /* EmojiMemoryTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000014 /* EmojiMemoryTestView.swift */; };
+		A10000012C68000100000015 /* GridMemoryTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000016 /* GridMemoryTestView.swift */; };
+		A10000012C68000100000017 /* VoiceTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000018 /* VoiceTestView.swift */; };
+		A10000012C68000100000019 /* SignalLightTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C6800010000001A /* SignalLightTestView.swift */; };
+		A10000012C6800010000001B /* ResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C6800010000001C /* ResultsView.swift */; };
+		A10000012C6800010000001D /* ConfidenceRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C6800010000001E /* ConfidenceRingView.swift */; };
+		A10000012C6800010000001F /* RideOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000020 /* RideOptionsView.swift */; };
+		A10000012C68000100000021 /* CountdownRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000022 /* CountdownRingView.swift */; };
+		A10000012C68000100000023 /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000024 /* ProgressBarView.swift */; };
+		A10000012C68000100000041 /* AutoStartTimerBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000042 /* AutoStartTimerBarView.swift */; };
+		A10000012C68000100000043 /* MotionBalanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000044 /* MotionBalanceService.swift */; };
+		A10000012C68000100000045 /* BalanceTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000046 /* BalanceTestView.swift */; };
+		A10000012C68000100000025 /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000026 /* Speech.framework */; };
+		A10000012C68000100000027 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000028 /* AVFoundation.framework */; };
+		A10000012C68000100000047 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000012C68000100000048 /* CoreMotion.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A10000012C68000100000000 /* SafetyBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafetyBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000012C68000100000002 /* SafetyBuddyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafetyBuddyApp.swift; sourceTree = "<group>"; };
+		A10000012C68000100000004 /* AssessmentModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/AssessmentModels.swift; sourceTree = "<group>"; };
+		A10000012C68000100000006 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/Constants.swift; sourceTree = "<group>"; };
+		A10000012C68000100000008 /* ScoringEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/ScoringEngine.swift; sourceTree = "<group>"; };
+		A10000012C6800010000000A /* SpeechRecognitionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/SpeechRecognitionService.swift; sourceTree = "<group>"; };
+		A10000012C6800010000000C /* AssessmentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModels/AssessmentViewModel.swift; sourceTree = "<group>"; };
+		A10000012C6800010000000E /* LandingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/LandingView.swift; sourceTree = "<group>"; };
+		A10000012C68000100000010 /* AssessmentFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/AssessmentFlowView.swift; sourceTree = "<group>"; };
+		A10000012C68000100000012 /* DrawingTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/Tests/DrawingTestView.swift; sourceTree = "<group>"; };
+		A10000012C68000100000014 /* EmojiMemoryTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/Tests/EmojiMemoryTestView.swift; sourceTree = "<group>"; };
+		A10000012C68000100000016 /* GridMemoryTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/Tests/GridMemoryTestView.swift; sourceTree = "<group>"; };
+		A10000012C68000100000018 /* VoiceTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/Tests/VoiceTestView.swift; sourceTree = "<group>"; };
+		A10000012C6800010000001A /* SignalLightTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/Tests/SignalLightTestView.swift; sourceTree = "<group>"; };
+		A10000012C6800010000001C /* ResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/Results/ResultsView.swift; sourceTree = "<group>"; };
+		A10000012C6800010000001E /* ConfidenceRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/Results/ConfidenceRingView.swift; sourceTree = "<group>"; };
+		A10000012C68000100000020 /* RideOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/Results/RideOptionsView.swift; sourceTree = "<group>"; };
+		A10000012C68000100000022 /* CountdownRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/Components/CountdownRingView.swift; sourceTree = "<group>"; };
+		A10000012C68000100000024 /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/Components/ProgressBarView.swift; sourceTree = "<group>"; };
+		A10000012C68000100000042 /* AutoStartTimerBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/Components/AutoStartTimerBarView.swift; sourceTree = "<group>"; };
+		A10000012C68000100000044 /* MotionBalanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/MotionBalanceService.swift; sourceTree = "<group>"; };
+		A10000012C68000100000046 /* BalanceTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/Tests/BalanceTestView.swift; sourceTree = "<group>"; };
+		A10000012C68000100000026 /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = System/Library/Frameworks/Speech.framework; sourceTree = SDKROOT; };
+		A10000012C68000100000028 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		A10000012C68000100000048 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		A10000012C68000100000029 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A10000012C68000100000030 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000012C68000100000025 /* Speech.framework in Frameworks */,
+				A10000012C68000100000027 /* AVFoundation.framework in Frameworks */,
+				A10000012C68000100000047 /* CoreMotion.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A10000012C68000100000031 = {
+			isa = PBXGroup;
+			children = (
+				A10000012C68000100000032 /* SafetyBuddy */,
+				A10000012C68000100000033 /* Products */,
+				A10000012C68000100000034 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A10000012C68000100000032 /* SafetyBuddy */ = {
+			isa = PBXGroup;
+			children = (
+				A10000012C68000100000002 /* SafetyBuddyApp.swift */,
+				A10000012C68000100000004 /* AssessmentModels.swift */,
+				A10000012C68000100000006 /* Constants.swift */,
+				A10000012C68000100000008 /* ScoringEngine.swift */,
+				A10000012C6800010000000A /* SpeechRecognitionService.swift */,
+				A10000012C68000100000044 /* MotionBalanceService.swift */,
+				A10000012C6800010000000C /* AssessmentViewModel.swift */,
+				A10000012C6800010000000E /* LandingView.swift */,
+				A10000012C68000100000010 /* AssessmentFlowView.swift */,
+				A10000012C68000100000012 /* DrawingTestView.swift */,
+				A10000012C68000100000046 /* BalanceTestView.swift */,
+				A10000012C68000100000014 /* EmojiMemoryTestView.swift */,
+				A10000012C68000100000016 /* GridMemoryTestView.swift */,
+				A10000012C68000100000018 /* VoiceTestView.swift */,
+				A10000012C6800010000001A /* SignalLightTestView.swift */,
+				A10000012C6800010000001C /* ResultsView.swift */,
+				A10000012C6800010000001E /* ConfidenceRingView.swift */,
+				A10000012C68000100000020 /* RideOptionsView.swift */,
+				A10000012C68000100000022 /* CountdownRingView.swift */,
+				A10000012C68000100000024 /* ProgressBarView.swift */,
+				A10000012C68000100000042 /* AutoStartTimerBarView.swift */,
+				A10000012C68000100000029 /* Info.plist */,
+			);
+			path = SafetyBuddy;
+			sourceTree = "<group>";
+		};
+		A10000012C68000100000033 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A10000012C68000100000000 /* SafetyBuddy.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A10000012C68000100000034 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A10000012C68000100000026 /* Speech.framework */,
+				A10000012C68000100000028 /* AVFoundation.framework */,
+				A10000012C68000100000048 /* CoreMotion.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A10000012C68000100000035 /* SafetyBuddy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000012C68000100000038 /* Build configuration list for PBXNativeTarget "SafetyBuddy" */;
+			buildPhases = (
+				A10000012C68000100000039 /* Sources */,
+				A10000012C68000100000030 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			name = SafetyBuddy;
+			productName = SafetyBuddy;
+			productReference = A10000012C68000100000000 /* SafetyBuddy.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A10000012C6800010000003A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					A10000012C68000100000035 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = A10000012C6800010000003B /* Build configuration list for PBXProject "SafetyBuddy" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A10000012C68000100000031;
+			productRefGroup = A10000012C68000100000033 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A10000012C68000100000035 /* SafetyBuddy */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A10000012C68000100000039 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000012C68000100000001 /* SafetyBuddyApp.swift in Sources */,
+				A10000012C68000100000003 /* AssessmentModels.swift in Sources */,
+				A10000012C68000100000005 /* Constants.swift in Sources */,
+				A10000012C68000100000007 /* ScoringEngine.swift in Sources */,
+				A10000012C68000100000009 /* SpeechRecognitionService.swift in Sources */,
+				A10000012C68000100000043 /* MotionBalanceService.swift in Sources */,
+				A10000012C6800010000000B /* AssessmentViewModel.swift in Sources */,
+				A10000012C6800010000000D /* LandingView.swift in Sources */,
+				A10000012C6800010000000F /* AssessmentFlowView.swift in Sources */,
+				A10000012C68000100000011 /* DrawingTestView.swift in Sources */,
+				A10000012C68000100000045 /* BalanceTestView.swift in Sources */,
+				A10000012C68000100000013 /* EmojiMemoryTestView.swift in Sources */,
+				A10000012C68000100000015 /* GridMemoryTestView.swift in Sources */,
+				A10000012C68000100000017 /* VoiceTestView.swift in Sources */,
+				A10000012C68000100000019 /* SignalLightTestView.swift in Sources */,
+				A10000012C6800010000001B /* ResultsView.swift in Sources */,
+				A10000012C6800010000001D /* ConfidenceRingView.swift in Sources */,
+				A10000012C6800010000001F /* RideOptionsView.swift in Sources */,
+				A10000012C68000100000021 /* CountdownRingView.swift in Sources */,
+				A10000012C68000100000023 /* ProgressBarView.swift in Sources */,
+				A10000012C68000100000041 /* AutoStartTimerBarView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A10000012C6800010000003C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_PROTOTHER_PREPROCESSOR_DEFINITIONS = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A10000012C6800010000003D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_PROTOTHER_PREPROCESSOR_DEFINITIONS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		A10000012C6800010000003E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SafetyBuddy/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.safetyassistant.safetybuddy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A10000012C6800010000003F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = SafetyBuddy/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.safetyassistant.safetybuddy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A10000012C68000100000038 /* Build configuration list for PBXNativeTarget "SafetyBuddy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000012C6800010000003E /* Debug */,
+				A10000012C6800010000003F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10000012C6800010000003B /* Build configuration list for PBXProject "SafetyBuddy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000012C6800010000003C /* Debug */,
+				A10000012C6800010000003D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A10000012C6800010000003A /* Project object */;
+}
